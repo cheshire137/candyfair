@@ -6,10 +6,10 @@ The fairest way to distribute candy!
 
 Install PostgreSQL, e.g., `brew install postgres`.
 
+    bundle install
     cp dotenv.development .env
 
-Update .env with details about your database.
+Update `.env` with details about your database.
 
-    bundle install
-    bin/rake db:create db:migrate
+    bin/rake db:create db:migrate db:seed
     bin/rails s
