@@ -1,17 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
   <title>Candyfair</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-
-  <%= yield %>
-
+  <div class="orange darken-2 title-area">
+    <div class="container">
+      <h1 class="white-text">Candyfair</h1>
+    </div>
+  </div>
+  <% if user_signed_in? %>
+    <nav role="navigation" class="grey darken-4 white-text nav-container">
+      <div class="container">
+        <ul class="right">
+          <li><a href="#">People</a></li>
+          <li>
+            <%= link_to 'Sign Out', destroy_user_session_path %>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  <% end %>
+  <div class="container">
+    <% if notice.present? %>
+      <p class="notice teal lighten-5"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert deep-orange lighten-3"><%= alert %></p>
+    <% end %>
+    <%= yield %>
+  </div>
 </body>
 </html>

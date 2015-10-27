@@ -1,3 +1,4 @@
+@import "materialize";
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -13,3 +14,13 @@
  *= require_tree .
  *= require_self
  */
+
+.title-area h1 {
+  margin: 0;
+  padding: 2.1rem 0 1.68rem 0;
+}
+
+.alert, .notice {
+  padding: 1.68rem;
+  border-radius: 2px;
+}
