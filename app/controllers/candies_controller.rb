@@ -3,6 +3,6 @@ class CandiesController < ApplicationController
 
   def index
     @candies = Candy.order(:name)
-    @people = current_user.people.order(:name)
+    @people = current_user.people.includes(preferences: :candy).order(:name)
   end
 end

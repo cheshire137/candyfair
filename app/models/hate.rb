@@ -1,0 +1,2 @@
+class Hate < Preference
+end

@@ -25,3 +25,21 @@ puts 'Seeding people'
 ].each do |name|
   Person.create!(name: name, created_by_user: user)
 end
+
+puts 'Seeding preferences'
+{
+  'Sarah' => {
+    'Like' => ['Kit Kat'],
+    'Hate' => ['Circus Peanuts', 'LaffyTaffy'],
+    'Love' => ['MilkyWay', 'Swedish Fish'],
+    'Dislike' => ['Heath']
+  }
+}.each do |person_name, preferences|
+  person = Person.find_by_name(person_name)
+  preferences.each do |type, candy_names|
+    candy_names.each do |candy_name|
+      Preference.create!(person: person, type: type,
+                         candy: Candy.find_by_name(candy_name))
+    end
+  end
+end

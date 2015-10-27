@@ -1,9 +1,23 @@
 <p>What candy do you have?</p>
 
-<% @candies.each do |candy| %>
-  <%= candy %><br>
-<% end %>
+<ul>
+  <% @candies.each do |candy| %>
+    <li><%= candy %></li>
+  <% end %>
+</ul>
 
-<% @people.each do |person| %>
-  <%= person %><br>
-<% end %>
+<hr>
+
+<ul>
+  <% @people.each do |person| %>
+    <li>
+      <%= person %>
+      <dl>
+        <% person.preferences.each do |preference| %>
+          <dt><%= preference.type %></dt>
+          <dd><%= preference.candy %></dd>
+        <% end %>
+      </dl>
+    </li>
+  <% end %>
+</ul>
