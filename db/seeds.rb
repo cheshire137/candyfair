@@ -33,6 +33,15 @@ puts 'Seeding preferences'
     'Hate' => ['Circus Peanuts', 'LaffyTaffy'],
     'Love' => ['MilkyWay', 'Swedish Fish'],
     'Dislike' => ['Heath']
+  },
+  'Lindsay' => {
+    'Like' => ['Whoppers']
+  },
+  'Summer' => {
+    'Like' => ['LaffyTaffy']
+  },
+  'Chase S' => {
+    'Love' => ['Swedish Fish']
   }
 }.each do |person_name, preferences|
   person = Person.find_by_name(person_name)
