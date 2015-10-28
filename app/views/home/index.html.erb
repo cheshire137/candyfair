@@ -10,7 +10,8 @@
     </li>
   <% end %>
 
-  <% @favored_by_many.each do |candy, people| %>
+  <% @favored_by_many.each do |candy, data| %>
+    <% people = data[:loves] + data[:likes] %>
     <li>
       <% if people.size == 2 %>
         Split
@@ -18,12 +19,16 @@
         Divvy up
       <% end %>
       the <strong><%= candy %></strong>
+      <% if data[:loves].empty? || data[:likes].empty? %>
+        evenly
+      <% end %>
       <% if people.size == 2 %>
         between
       <% else %>
         among
       <% end %>
-      <strong><%= people.to_sentence %></strong>.
+      <strong><%= people.to_sentence %></strong><% if data[:loves].empty? || data[:likes].empty? %>.<% else %>...<br>&nbsp;&nbsp;&nbsp;&nbsp;but <strong><%= data[:loves].to_sentence %></strong> should get more.
+      <% end %>
     </li>
   <% end %>
 

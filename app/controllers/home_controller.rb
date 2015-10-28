@@ -16,10 +16,9 @@ class HomeController < ApplicationController
     candies = Candy.favored_by_many.includes(preferences: :person).order(:name)
     candies.each do |candy|
       key = candy.name
-      favored_by_many[key] ||= []
-      favored_by_many[key] += candy.preferences.favorable.map {|pref|
-        pref.person.name
-      }
+      favored_by_many[key] ||= {}
+      favored_by_many[key][:loves] = candy.loves.map {|pref| pref.person.name }
+      favored_by_many[key][:likes] = candy.likes.map {|pref| pref.person.name }
     end
     favored_by_many
   end
