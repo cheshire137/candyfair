@@ -1,5 +1,7 @@
 # Candyfair
 
+![Candyfair](https://raw.githubusercontent.com/moneypenny/candyfair/master/app/assets/images/CANDYFAIR-75px.png)
+
 The fairest way to distribute candy! Thanks to 
 [summasmiff](https://github.com/summasmiff) for the logo!
 
