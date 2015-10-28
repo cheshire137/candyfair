@@ -13,7 +13,9 @@
       </ol>
     <% end %>
 
-    <hr>
+    <% if @popular_candies.to_a.size > 0 && @disliked_candies.to_a.size > 0 %>
+      <hr>
+    <% end %>
 
     <% if @disliked_candies.to_a.size > 0 %>
       <h3>Most Disliked Candies</h3>
@@ -32,6 +34,23 @@
           <li><%= candy %></li>
         <% end %>
       </ol>
+    <% end %>
+
+    <% if @boring_candies.to_a.size > 0 && @unrated_candies.to_a.size > 0 %>
+      <hr>
+    <% end %>
+
+    <% if @unrated_candies.to_a.size > 0 %>
+      <h3>Unrated Candies</h3>
+      <p>
+        <strong><%= @unrated_candies.to_sentence %></strong>
+        <% if @unrated_candies.to_a.size == 1 %>
+          has
+        <% else %>
+          have
+        <% end %>
+        not yet been rated.
+      </p>
     <% end %>
   </div>
 </div>

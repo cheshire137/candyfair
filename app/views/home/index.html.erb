@@ -37,4 +37,10 @@
       Throw away all the <strong><%= @favored_by_none.to_sentence %></strong>.
     </li>
   <% end %>
+
+  <% if @unrated.size > 0 %>
+    <li>
+      The vote is still out on <strong><%= @unrated.to_sentence %></strong>.
+    </li>
+  <% end %>
 </ul>

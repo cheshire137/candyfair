@@ -36,7 +36,7 @@ class Candy < ActiveRecord::Base
 
   scope :favored_by_none, ->{
     favored_candy_ids = Preference.select(:candy_id).favorable
-    where.not(id: favored_candy_ids)
+    where.not(id: favored_candy_ids).where(id: Preference.select(:candy_id))
   }
 
   scope :favored_by_many, ->{
@@ -50,6 +50,10 @@ class Candy < ActiveRecord::Base
     joins(:preferences).where.not(id: opinionated_candy_ids).group(:id).
         select('candies.*, COUNT(preferences.id) AS preferences_count').
         order('preferences_count DESC')
+  }
+
+  scope :unrated, ->{
+    where.not(id: Preference.select(:candy_id))
   }
 
   def percentage_hate

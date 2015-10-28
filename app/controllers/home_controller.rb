@@ -7,6 +7,7 @@ class HomeController < ApplicationController
     @favored_by_one = get_favored_by_one
     @favored_by_none = Candy.favored_by_none.order(:name).pluck(:name)
     @favored_by_many = get_favored_by_many
+    @unrated = Candy.unrated.order(:name).pluck(:name)
   end
 
   private
