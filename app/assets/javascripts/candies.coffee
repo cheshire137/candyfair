@@ -1,12 +1,14 @@
 linkify_candies = ->
   container = $('.candies-list')
   candy_names = container.text().split(',')
+  if candy_names.length == 1
+    candy_names = candy_names[0].split(' and ')
   candy_names = ($.trim(name) for name in candy_names)
   last_name = candy_names[candy_names.length - 1]
   last_name = last_name.replace(/^and /, '').replace(/\.$/, '')
   candy_names[candy_names.length - 1] = last_name
   links = []
-  for name in candy_names
+  for name in candy_names when name != ''
     link = document.createElement('a')
     link.href = '#'
     link.className = 'remove-candy'
@@ -17,12 +19,13 @@ linkify_candies = ->
   container_el = container[0]
   for link in links
     container_el.appendChild link
-    if i == links.length - 2 and links.length > 2
+    if i == links.length - 2 and links.length > 1
       container_el.appendChild document.createTextNode(' and ')
     else if i < links.length - 1
       container_el.appendChild document.createTextNode(', ')
     i++
-  container_el.appendChild document.createTextNode('.')
+  if i > 0
+    container_el.appendChild document.createTextNode('.')
 
 update_candies_list = (response) ->
   $('.candies-list').text(response.candies_list)

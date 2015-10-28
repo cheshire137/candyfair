@@ -1,7 +1,10 @@
 class Candy < ActiveRecord::Base
+  belongs_to :user
+
   before_validation :normalize_name
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, :user, presence: true
+  validates :name, uniqueness: {scope: [:user_id]}
 
   has_many :preferences, dependent: :destroy
 
@@ -16,6 +19,8 @@ class Candy < ActiveRecord::Base
   has_many :dislikers, through: :dislikes, source: :person
 
   def to_s ; name ; end
+
+  scope :for_user, ->(user) { where(user: user) }
 
   scope :order_by_preferences_count, ->(types) {
     joins(:preferences).where(preferences: {type: types}).
@@ -65,8 +70,8 @@ class Candy < ActiveRecord::Base
 
   scope :unrated, ->{ where.not(id: Preference.select(:candy_id)) }
 
-  def self.most_divisive limit
-    divisive.sort_by {|candy|
+  def self.most_divisive user, limit
+    for_user(user).divisive.sort_by {|candy|
       (candy.love_count - candy.hate_count).abs
     }.reverse[0...limit]
   end

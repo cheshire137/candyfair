@@ -1,10 +1,10 @@
 class Person < ActiveRecord::Base
   extend FriendlyId
 
-  belongs_to :created_by_user, class_name: 'User'
+  belongs_to :user
 
-  validates :name, :created_by_user, presence: true
-  validates :name, uniqueness: {scope: [:created_by_user_id]}
+  validates :name, :user, presence: true
+  validates :name, uniqueness: {scope: [:user_id]}
 
   friendly_id :name, use: [:slugged, :finders]
 

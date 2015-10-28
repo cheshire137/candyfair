@@ -3,7 +3,7 @@ class CandiesController < ApplicationController
   before_action :set_candy, only: [:show, :update]
 
   def index
-    @candies = Candy.order(:name)
+    @candies = current_user.candies.order(:name)
     set_candies_list
   end
 
@@ -12,17 +12,20 @@ class CandiesController < ApplicationController
   end
 
   def trends
-    @popular_candies = Candy.popular.limit(5)
-    @disliked_candies = Candy.disliked.limit(5)
-    @hated_candy = Hate.all.sample.candy
-    @hate_percentage = @hated_candy.percentage_hate
-    @boring_candies = Candy.boring.limit(5)
-    @unrated_candies = Candy.unrated.order(:name).pluck(:name)
-    @divisive_candies = Candy.most_divisive(5)
+    @popular_candies = Candy.popular.for_user(current_user).limit(5)
+    @disliked_candies = Candy.disliked.for_user(current_user).limit(5)
+    if hate_pref=Hate.for_user(current_user).sample
+      @hated_candy = hate_pref.candy
+      @hate_percentage = @hated_candy.percentage_hate
+    end
+    @boring_candies = Candy.boring.for_user(current_user).limit(5)
+    @unrated_candies = Candy.unrated.for_user(current_user).order(:name).
+                             pluck(:name)
+    @divisive_candies = Candy.most_divisive(current_user, 5)
   end
 
   def create
-    @candy = Candy.new(name: params[:name])
+    @candy = current_user.candies.new(name: params[:name])
     if @candy.save
       set_candies_list
       render action: 'show', status: :created
@@ -32,7 +35,7 @@ class CandiesController < ApplicationController
   end
 
   def destroy
-    @candy = Candy.find_by_name(params[:name])
+    @candy = current_user.candies.find_by_name(params[:name])
     if @candy.destroy
       set_candies_list
       render action: 'show'
@@ -48,7 +51,11 @@ class CandiesController < ApplicationController
   end
 
   def set_candies_list
-    @candies ||= Candy.order(:name)
-    @candies_list = @candies.select(:name).pluck(:name).to_sentence + '.'
+    @candies ||= current_user.candies.order(:name)
+    if @candies.count > 0
+      @candies_list = @candies.select(:name).pluck(:name).to_sentence + '.'
+    else
+      @candies_list = ''
+    end
   end
 end

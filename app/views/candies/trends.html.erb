@@ -2,10 +2,12 @@
   <li><%= link_to 'Trends', trends_candies_path %></li>
 <% end %>
 
-<p>
-  <strong><%= @hate_percentage %>%</strong> of people think
-  <strong><%= @hated_candy %></strong> is a bullshit candy.
-</p>
+<% if @hate_percentage && @hated_candy %>
+  <p>
+    <strong><%= @hate_percentage %>%</strong> of people think
+    <strong><%= @hated_candy %></strong> is a bullshit candy.
+  </p>
+<% end %>
 
 <div class="row">
   <div class="col s6">

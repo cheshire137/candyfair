@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028000114) do
+ActiveRecord::Schema.define(version: 20151028230321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(version: 20151028000114) do
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id",    null: false
   end
 
-  add_index "candies", ["name"], name: "index_candies_on_name", unique: true, using: :btree
+  add_index "candies", ["user_id", "name"], name: "index_candies_on_user_id_and_name", unique: true, using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -38,14 +39,14 @@ ActiveRecord::Schema.define(version: 20151028000114) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "people", force: :cascade do |t|
-    t.string   "name",               null: false
+    t.string   "name",       null: false
     t.string   "slug"
-    t.integer  "created_by_user_id", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "people", ["name", "created_by_user_id"], name: "index_people_on_name_and_created_by_user_id", unique: true, using: :btree
+  add_index "people", ["name", "user_id"], name: "index_people_on_name_and_user_id", unique: true, using: :btree
 
   create_table "preferences", force: :cascade do |t|
     t.string   "type"

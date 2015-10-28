@@ -15,7 +15,7 @@ puts 'Seeding candy'
   'Toblerone', 'Nerds', 'LaffyTaffy', "Hershey's Kisses", 'Tootsie Roll',
   'Swedish Fish', 'Pixy Stix', 'Nestlé Crunch'
 ].each do |name|
-  Candy.create!(name: name)
+  Candy.create!(name: name, user: user)
 end
 
 puts 'Seeding people'
@@ -23,7 +23,7 @@ puts 'Seeding people'
   'Sarah', 'Summer', 'Todd', 'Nick', 'Chase S', 'Chase J', 'David', 'Dave',
   'Mklbtz', 'Michael H', 'Erik', 'Graham', 'Lindsay', 'Heather', 'Tristan'
 ].each do |name|
-  Person.create!(name: name, created_by_user: user)
+  Person.create!(name: name, user: user)
 end
 
 puts 'Seeding preferences'
