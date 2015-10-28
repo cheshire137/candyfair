@@ -47,6 +47,15 @@
     <% end %>
     <%= yield %>
   </div>
+  <div class="amber lighten-5 footer">
+    <div class="container">
+      <ul>
+        <li>
+          <%= link_to 'View Source', 'https://github.com/moneypenny/candyfair', class: 'orange-text text-darken-4' %>
+        </li>
+      </ul>
+    </div>
+  </div>
   <%= javascript_include_tag 'application' %>
 </body>
 </html>

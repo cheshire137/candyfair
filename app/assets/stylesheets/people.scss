@@ -1,4 +1,8 @@
 .people-list {
+  & > li + li {
+    margin-top: 5px;
+  }
+
   li {
     padding-left: 15px;
 
