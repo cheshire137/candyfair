@@ -2,6 +2,32 @@
   <li><%= link_to 'Candies', candies_path %></li>
 <% end %>
 
+<h3>Your Current Selection</h3>
+
+<form method="POST" action="<%= add_candies_path %>" class="selection-form col s12">
+  <div class="row">
+    <% @selections.each do |selection| %>
+      <div class="col s3">
+        <label class="inline" for="selection-<%= selection.candy_id %>">
+          <%= selection.candy %>
+        </label>
+        <input class="inline" id="selection-<%= selection.candy_id %>" type="number" min="0" value="<%= selection.quantity %>" name="selections[<%= selection.candy_id %>]">
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <button type="submit" class="btn waves-effect waves-light orange accent-2 grey-text text-darken-4">
+        Save Candy Selection
+      </button>
+    </div>
+  </div>
+</form>
+
+<hr>
+
+<h3>Manage Candy</h3>
+
 <p id="candy-error" class="alert deep-orange lighten-3" style="display: none"></p>
 
 <p class="candies-list"><%= @candies_list %></p>

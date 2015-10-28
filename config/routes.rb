@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :candies, only: [:index, :create, :show] do
     collection do
+      post :add
       delete :destroy
     end
   end

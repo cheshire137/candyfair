@@ -4,11 +4,35 @@ class CandiesController < ApplicationController
 
   def index
     @candies = Candy.order(:name)
+    user_selections = Hash[current_user.selections.includes(:candy).map {|s|
+      [s.candy_id, s]
+    }]
+    @selections = @candies.map {|candy|
+      if user_selections.key? candy.id
+        user_selections[candy.id]
+      else
+        Selection.new(user: current_user, candy: candy, quantity: 0)
+      end
+    }
     set_candies_list
   end
 
   def show
     set_candies_list
+  end
+
+  def add
+    success = true
+    params[:selections].each do |candy_id, quantity|
+      selection = Selection.new(candy_id: candy_id, quantity: quantity)
+      success = success and selection.save
+    end
+    if success
+      flash[:notice] = 'Saved your current candy selection.'
+    else
+      flash[:alert] = 'Could not save all your current selections.'
+    end
+    redirect_to candies_path
   end
 
   def create

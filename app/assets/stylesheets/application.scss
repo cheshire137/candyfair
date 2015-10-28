@@ -26,6 +26,12 @@ main {
   a:hover, a:focus {
     color: #e65100;
   }
+
+  h3 {
+    font-size: 2.28rem;
+    line-height: 110%;
+    margin: 1.14rem 0 0.912rem 0;
+  }
 }
 
 .title-area {
@@ -58,4 +64,11 @@ nav ul.left a {
   ul {
     margin: 0;
   }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #e65100;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
