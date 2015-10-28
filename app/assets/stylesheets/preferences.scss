@@ -208,3 +208,12 @@ $lip-thickness: 3px;
     }
   }
 }
+
+form.delete-person {
+  input[type="submit"].btn {
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+  }
+}

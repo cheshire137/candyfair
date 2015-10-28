@@ -41,3 +41,9 @@
     </li>
   <% end %>
 </ul>
+
+<hr>
+
+<%= form_tag person_path(@person), method: 'delete', class: 'delete-person' do -%>
+  <%= submit_tag 'Delete This Person', class: 'btn red accent-2 white-text' %>
+<% end %>

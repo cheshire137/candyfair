@@ -34,3 +34,8 @@ $('a.set-preference').click (e) ->
     console.error 'failed to save preference', error
     $('#preference-error').text('Could not save preference').show()
   $.ajax(options).done(on_success).fail(on_error)
+
+$('form.delete-person').submit (e) ->
+  message = 'Are you sure you want to delete this person and their preferences?'
+  unless confirm(message)
+    e.preventDefault()

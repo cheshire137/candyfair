@@ -1,12 +1,12 @@
 class PeopleController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_person, only: [:show, :destroy]
 
   def index
     @people = current_user.people.includes(preferences: :candy).order(:name)
   end
 
   def show
-    @person = current_user.people.find(params[:id])
   end
 
   def create
@@ -16,5 +16,20 @@ class PeopleController < ApplicationController
     else
       render json: @person.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    if @person.destroy
+      redirect_to people_path, notice: "#{@person.name} had it coming."
+    else
+      redirect_to person_preferences_path(@person),
+                  alert: "Could not remove #{@person.name}."
+    end
+  end
+
+  private
+
+  def set_person
+    @person = current_user.people.find(params[:id])
   end
 end

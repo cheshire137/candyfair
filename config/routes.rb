@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :people, only: [:index, :create, :show] do
+  resources :people, only: [:index, :create, :show, :destroy] do
     resources :preferences, only: [:index, :create, :destroy]
   end
 
