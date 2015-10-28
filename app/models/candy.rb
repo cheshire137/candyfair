@@ -28,6 +28,17 @@ class Candy < ActiveRecord::Base
 
   scope :disliked, ->{ order_by_preferences_count(%w(Dislike Hate)) }
 
+  scope :divisive, ->{
+    loved_and_hated_candy_ids = Love.select(:candy_id).pluck(:candy_id) &
+                                Hate.select(:candy_id).pluck(:candy_id)
+    where(id: loved_and_hated_candy_ids).joins(:preferences).
+        where(preferences: {type: %w(Love Hate)}).
+        select('candies.*, ' +
+               "SUM(CASE WHEN type='Love' THEN 1 ELSE 0 END) AS love_count, " +
+               "SUM(CASE WHEN type='Hate' THEN 1 ELSE 0 END) AS hate_count").
+        group(:id)
+  }
+
   scope :favored_by_one, ->{
     candy_ids = Preference.select(:candy_id).group(:candy_id).
                            having('COUNT(id) = 1')
@@ -52,9 +63,13 @@ class Candy < ActiveRecord::Base
         order('preferences_count DESC')
   }
 
-  scope :unrated, ->{
-    where.not(id: Preference.select(:candy_id))
-  }
+  scope :unrated, ->{ where.not(id: Preference.select(:candy_id)) }
+
+  def self.most_divisive limit
+    divisive.sort_by {|candy|
+      (candy.love_count - candy.hate_count).abs
+    }.reverse[0...limit]
+  end
 
   def percentage_hate
     total_people = Person.count

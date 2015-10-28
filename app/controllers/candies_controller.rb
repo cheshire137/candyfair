@@ -18,6 +18,7 @@ class CandiesController < ApplicationController
     @hate_percentage = @hated_candy.percentage_hate
     @boring_candies = Candy.boring.limit(5)
     @unrated_candies = Candy.unrated.order(:name).pluck(:name)
+    @divisive_candies = Candy.most_divisive(5)
   end
 
   def create

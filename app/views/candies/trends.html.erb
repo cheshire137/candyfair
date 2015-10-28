@@ -27,6 +27,25 @@
     <% end %>
   </div>
   <div class="col s6">
+    <% if @divisive_candies.to_a.size > 0 %>
+      <h3>Most Divisive Candies</h3>
+      <ol>
+        <% @divisive_candies.each do |candy| %>
+          <li>
+            <%= candy %>&nbsp;&nbsp;
+            <em class="grey-text">
+              <%= pluralize candy.love_count, 'love' %>,
+              <%= pluralize candy.hate_count, 'hate' %>
+            </em>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+
+    <% if @boring_candies.to_a.size > 0 && @divisive_candies.to_a.size > 0 %>
+      <hr>
+    <% end %>
+
     <% if @boring_candies.to_a.size > 0 %>
       <h3>Most Boring Candies</h3>
       <ol>
