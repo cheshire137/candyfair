@@ -14,6 +14,8 @@ class CandiesController < ApplicationController
   def trends
     @popular_candies = Candy.popular.limit(5)
     @disliked_candies = Candy.disliked.limit(5)
+    @hated_candy = Hate.all.sample.candy
+    @hate_percentage = @hated_candy.percentage_hate
   end
 
   def create

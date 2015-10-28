@@ -18,6 +18,12 @@ class Candy < ActiveRecord::Base
 
   scope :disliked, ->{ order_by_preferences_count(%w(Dislike Hate)) }
 
+  def percentage_hate
+    total_people = Person.count
+    total_haters = Hate.where(candy_id: id).count
+    ((total_haters / total_people.to_f) * 100).round
+  end
+
   private
 
   def normalize_name
