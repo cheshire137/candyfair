@@ -1,8 +1,10 @@
 class Candy < ActiveRecord::Base
   before_validation :normalize_name
+
   validates :name, presence: true, uniqueness: true
 
   has_many :preferences, dependent: :destroy
+  has_many :selections, dependent: :destroy
 
   def to_s ; name ; end
 

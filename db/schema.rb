@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028000114) do
+ActiveRecord::Schema.define(version: 20151028034857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,17 @@ ActiveRecord::Schema.define(version: 20151028000114) do
   add_index "preferences", ["candy_id", "person_id"], name: "index_preferences_on_candy_id_and_person_id", unique: true, using: :btree
   add_index "preferences", ["candy_id"], name: "index_preferences_on_candy_id", using: :btree
   add_index "preferences", ["person_id"], name: "index_preferences_on_person_id", using: :btree
+
+  create_table "selections", force: :cascade do |t|
+    t.integer  "candy_id",               null: false
+    t.integer  "quantity",   default: 1, null: false
+    t.integer  "user_id",                null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "selections", ["candy_id", "user_id"], name: "index_selections_on_candy_id_and_user_id", unique: true, using: :btree
+  add_index "selections", ["user_id"], name: "index_selections_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",           default: "", null: false
