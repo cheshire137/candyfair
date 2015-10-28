@@ -12,4 +12,13 @@ Install PostgreSQL, e.g., `brew install postgres`.
 Update `.env` with details about your database.
 
     bin/rake db:create db:migrate db:seed
-    bin/rails s
+    foreman start
+
+## How to Deploy to Heroku
+
+Create your app on Heroku, then add the `heroku` git remote.
+
+    heroku config:set DEFAULT_USER=desired_default_username
+    heroku config:set DEFAULT_PASSWORD=desired_default_account_password
+    heroku ps:scale web=1
+    git push heroku master
