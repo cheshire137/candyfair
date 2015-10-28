@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
   <title>Candyfair</title>
   <%= stylesheet_link_tag 'application', media: 'all' %>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -35,7 +36,7 @@
       </div>
     </nav>
   <% end %>
-  <div class="container">
+  <div class="container main-content">
     <% if notice.present? %>
       <p class="notice teal lighten-5"><%= notice %></p>
     <% end %>

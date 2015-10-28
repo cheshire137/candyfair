@@ -2,6 +2,21 @@
 @import "preferences";
 @import "people";
 
+.main-content {
+  a, a:link, a:visited, a:active {
+    color: #ff6f00;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+  }
+
+  a:hover, a:focus {
+    color: #e65100;
+  }
+}
+
 .title-area h1 {
   margin: 0;
   padding: 2.1rem 0 1.68rem 0;

@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   before_action :redirect_to_login, only: [:index]
 
   def index
-    redirect_to candies_path
+    redirect_to people_path
   end
 
   private

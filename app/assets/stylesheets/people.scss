@@ -1,6 +1,11 @@
 .people-list {
   li {
+    padding-left: 15px;
+
     .person-preferences {
+      li {
+        padding-left: 0;
+      }
     }
   }
 }
