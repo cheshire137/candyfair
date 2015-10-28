@@ -35,6 +35,12 @@ class Candy < ActiveRecord::Base
                               id: candy_ids)
   }
 
+  scope :favored_by_none, ->{
+    favored_candy_ids = Preference.select(:candy_id).
+                                   where(type: %w(Like Love))
+    where.not(id: favored_candy_ids)
+  }
+
   def percentage_hate
     total_people = Person.count
     total_haters = Hate.where(candy_id: id).count

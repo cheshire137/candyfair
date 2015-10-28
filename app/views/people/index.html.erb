@@ -16,7 +16,7 @@
             <% end %>
             <%= type %>
             <% candies.each_with_index do |candy, i| %>
-              <strong><%= candy %></strong><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %>
+              <strong><%= candy %></strong><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %><% if i == candies.length - 1 %>.<% end %>
             <% end %>
           </li>
           <% type_index += 1 %>

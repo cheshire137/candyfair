@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   def index
     @candies = Candy.order(:name)
     @favored_by_one = get_favored_by_one
+    @favored_by_none = Candy.favored_by_none.order(:name).pluck(:name)
   end
 
   private
