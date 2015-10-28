@@ -47,7 +47,11 @@ $('form.add-candy').on 'submit', (e) ->
 
 $('body').on 'click', 'a.remove-candy', (e) ->
   e.preventDefault()
-  name = $(e.target).text()
+  link = $(e.target)
+  name = link.text()
+  unless confirm("Are you sure you want to delete #{name}?")
+    link.blur()
+    return
   options =
     method: 'DELETE'
     url: '/candies.json'

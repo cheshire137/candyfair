@@ -9,17 +9,17 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="orange darken-2 title-area">
+  <header class="orange darken-2 title-area">
     <div class="container">
       <h1 class="white-text">
         <%= link_to 'Candyfair', root_path, class: 'white-text' %>
       </h1>
     </div>
-  </div>
+  </header>
   <% if user_signed_in? %>
     <nav role="navigation" class="grey darken-4 white-text nav-container">
       <div class="container">
-        <ul class="left">
+        <ul class="left title-links">
           <% if content_for? :title %>
             <%= yield :title %>
           <% end %>
@@ -38,16 +38,18 @@
       </div>
     </nav>
   <% end %>
-  <div class="container main-content">
-    <% if notice.present? %>
-      <p class="notice teal lighten-5"><%= notice %></p>
-    <% end %>
-    <% if alert.present? %>
-      <p class="alert deep-orange lighten-3"><%= alert %></p>
-    <% end %>
-    <%= yield %>
-  </div>
-  <div class="amber lighten-5 footer">
+  <main class="main-content">
+    <div class="container">
+      <% if notice.present? %>
+        <p class="notice teal lighten-5"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p class="alert deep-orange lighten-3"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
+  </main>
+  <footer class="amber lighten-5 footer">
     <div class="container">
       <ul>
         <li>
@@ -55,7 +57,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </footer>
   <%= javascript_include_tag 'application' %>
 </body>
 </html>

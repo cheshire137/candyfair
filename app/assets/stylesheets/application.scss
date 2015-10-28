@@ -3,6 +3,16 @@
 @import "people";
 @import "candies";
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 .main-content {
   a, a:link, a:visited, a:active {
     color: #ff6f00;
