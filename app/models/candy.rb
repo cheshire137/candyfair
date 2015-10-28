@@ -21,7 +21,7 @@ class Candy < ActiveRecord::Base
     joins(:preferences).where(preferences: {type: types}).
                         select('candies.*, ' +
                                'COUNT(preferences.id) AS preferences_count').
-                        group('candies.id').order('preferences_count DESC')
+                        group(:id).order('preferences_count DESC')
   }
 
   scope :popular, ->{ order_by_preferences_count(%w(Like Love)) }
@@ -43,6 +43,13 @@ class Candy < ActiveRecord::Base
     favored_candy_ids = Preference.select(:candy_id).favorable.
                                    group(:candy_id).having('COUNT(id) > 1')
     where(id: favored_candy_ids)
+  }
+
+  scope :boring, ->{
+    opinionated_candy_ids = Preference.extremes.select(:candy_id)
+    joins(:preferences).where.not(id: opinionated_candy_ids).group(:id).
+        select('candies.*, COUNT(preferences.id) AS preferences_count').
+        order('preferences_count DESC')
   }
 
   def percentage_hate

@@ -13,4 +13,6 @@ class Preference < ActiveRecord::Base
   scope :for_candy, ->(candy) { where(candy_id: candy) }
 
   scope :favorable, ->{ where(type: %w(Like Love)) }
+
+  scope :extremes, ->{ where(type: %w(Love Hate)) }
 end
