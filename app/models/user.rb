@@ -6,6 +6,5 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: {case_sensitive: false}
 
   has_many :people, foreign_key: 'created_by_user_id', dependent: :destroy
-  has_many :selections, dependent: :destroy
   has_many :preferences, through: :people
 end
