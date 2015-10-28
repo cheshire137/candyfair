@@ -9,6 +9,10 @@ class Person < ActiveRecord::Base
   friendly_id :name, use: [:slugged, :finders]
 
   has_many :preferences, dependent: :destroy
+  has_many :loves
+  has_many :hates
+  has_many :likes
+  has_many :dislikes
 
   def to_s ; name ; end
 

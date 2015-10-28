@@ -5,6 +5,16 @@ class Candy < ActiveRecord::Base
 
   has_many :preferences, dependent: :destroy
 
+  has_many :loves, class_name: 'Love'
+  has_many :hates, class_name: 'Hate'
+  has_many :likes, class_name: 'Like'
+  has_many :dislikes, class_name: 'Dislike'
+
+  has_many :lovers, through: :loves, source: :person
+  has_many :haters, through: :hates, source: :person
+  has_many :likers, through: :likes, source: :person
+  has_many :dislikers, through: :dislikes, source: :person
+
   def to_s ; name ; end
 
   scope :order_by_preferences_count, ->(types) {
@@ -17,6 +27,13 @@ class Candy < ActiveRecord::Base
   scope :popular, ->{ order_by_preferences_count(%w(Like Love)) }
 
   scope :disliked, ->{ order_by_preferences_count(%w(Dislike Hate)) }
+
+  scope :favored_by_one, ->{
+    candy_ids = Preference.select(:candy_id).group(:candy_id).
+                           having('COUNT(id) = 1')
+    joins(:preferences).where(preferences: {type: %w(Like Love)},
+                              id: candy_ids)
+  }
 
   def percentage_hate
     total_people = Person.count

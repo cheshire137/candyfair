@@ -2,4 +2,21 @@
   <li><%= link_to 'Home', root_path %></li>
 <% end %>
 
-<p>Suggested candy distribution coming soon</p>
+<% @favored_by_one.each do |person, candies| %>
+  <p>
+    Give all the <strong><%= candies.to_sentence %></strong> to
+    <strong><%= person %></strong>.
+  </p>
+<% end %>
+
+<hr>
+
+<p>More analysis coming soon...</p>
+
+<!--
+Give all the 3 Musketeers to Lindsay.
+
+Divide the Twix and PixyStix between Summer and Sarah.
+
+Throw the Circus Peanuts in the Trash.
+-->
