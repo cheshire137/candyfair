@@ -28,9 +28,18 @@ main {
   }
 }
 
-.title-area h1 {
-  margin: 0;
-  padding: 2.1rem 0 1.68rem 0;
+.title-area {
+  padding: 25px 0;
+
+  h1, h2 {
+    display: inline-block;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    line-height: 110%;
+  }
 }
 
 .alert, .notice {
