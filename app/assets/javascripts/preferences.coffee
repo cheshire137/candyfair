@@ -3,17 +3,20 @@ $('a.set-preference').click (e) ->
   link = $(e.target)
   unless link.is('a.set-preference')
     link = link.closest('a.set-preference')
-  link.closest('.preference').find('li.active').removeClass 'active'
   candy_id = link.data('candy-id')
   person_id = link.data('person-id')
   type = link.data('preference-type')
   preference_id = link.data('preference-id')
   url = "/people/#{person_id}/preferences"
-  if type == '' and preference_id
-    url += "/#{preference_id}"
-    method = 'DELETE'
+  if type == ''
+    if preference_id
+      url += "/#{preference_id}"
+      method = 'DELETE'
+    else
+      return
   else
     method = 'POST'
+  link.closest('.preference').find('li.active').removeClass 'active'
   url += '.json'
   options =
     method: method

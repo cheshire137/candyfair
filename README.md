@@ -20,5 +20,6 @@ Create your app on Heroku, then add the `heroku` git remote.
 
     heroku config:set DEFAULT_USER=desired_default_username
     heroku config:set DEFAULT_PASSWORD=desired_default_account_password
-    heroku ps:scale web=1
     git push heroku master
+    heroku ps:scale web=1
+    heroku run bin/rake db:migrate db:seed
