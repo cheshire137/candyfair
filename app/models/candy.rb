@@ -8,6 +8,17 @@ class Candy < ActiveRecord::Base
 
   def to_s ; name ; end
 
+  scope :order_by_preferences_count, ->(types) {
+    joins(:preferences).where(preferences: {type: types}).
+                        select('candies.*, ' +
+                               'COUNT(preferences.id) AS preferences_count').
+                        group('candies.id').order('preferences_count DESC')
+  }
+
+  scope :popular, ->{ order_by_preferences_count(%w(Like Love)) }
+
+  scope :disliked, ->{ order_by_preferences_count(%w(Dislike Hate)) }
+
   private
 
   def normalize_name

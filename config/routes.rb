@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       post :add
       delete :destroy
+      get :trends
     end
   end
 

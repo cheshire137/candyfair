@@ -21,6 +21,11 @@ class CandiesController < ApplicationController
     set_candies_list
   end
 
+  def trends
+    @popular_candies = Candy.popular.limit(5)
+    @disliked_candies = Candy.disliked.limit(5)
+  end
+
   def add
     success = true
     params[:selections].each do |candy_id, quantity|
