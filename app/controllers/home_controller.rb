@@ -1,15 +1,17 @@
 class HomeController < ApplicationController
-  before_action :redirect_to_login, only: [:index]
+  before_action :authenticate_user!
+  before_action :redirect_if_no_data, only: [:index]
 
   def index
-    redirect_to people_path
   end
 
   private
 
-  def redirect_to_login
-    unless user_signed_in?
-      redirect_to new_user_session_path
+  def redirect_if_no_data
+    if current_user.preferences.count < 1
+      redirect_to people_path
+    elsif current_user.selections.count < 1
+      redirect_to candies_path
     end
   end
 end
