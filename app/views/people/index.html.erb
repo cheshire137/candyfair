@@ -1,5 +1,5 @@
 <% content_for :title do %>
-  <li><%= link_to 'Preferences', people_path %></li>
+  <li><%= link_to 'People', people_path %></li>
 <% end %>
 
 <ul class="people-list">
@@ -25,3 +25,21 @@
     </li>
   <% end %>
 </ul>
+
+<% if @people.count > 0 %>
+  <hr>
+<% end %>
+
+<p id="person-error" class="alert deep-orange lighten-3" style="display: none"></p>
+
+<div class="row">
+  <form class="add-person col s12">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="material-icons prefix">add</i>
+        <input type="text" id="new-person-name" placeholder="Name">
+        <label for="new-person-name">Add person</label>
+      </div>
+    </div>
+  </form>
+</div>

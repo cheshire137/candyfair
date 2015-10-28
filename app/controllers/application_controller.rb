@@ -2,6 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from ActiveRecord::RecordNotFound do |ex|
+    respond_to do |format|
+      format.json { render json: {error: '404 Not Found'}, status: :not_found }
+      format.html { render text: '404 Not Found', status: :not_found }
+    end
+  end
+
   protected
 
   def configure_permitted_parameters
