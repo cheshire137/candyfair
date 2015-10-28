@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
 
   def preferences_summary
     types = {}
-    preferences.each do |p|
+    preferences.joins(:candy).order('type DESC, candies.name ASC').each do |p|
       key = p.type.downcase + 's'
       types[key] ||= []
       types[key] << p.candy
