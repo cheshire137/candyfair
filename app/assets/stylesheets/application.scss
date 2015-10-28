@@ -38,6 +38,12 @@ main {
 .title-area {
   padding: 25px 0;
 
+  h1 img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 75px;
+  }
+
   h1, h2 {
     display: inline-block;
     margin: 0;
@@ -64,6 +70,14 @@ nav ul.left a {
 
   ul {
     margin: 0;
+
+    li {
+      display: inline-block;
+
+      & + li {
+        margin-left: 3em;
+      }
+    }
   }
 }
 

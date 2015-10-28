@@ -1,6 +1,7 @@
 # Candyfair
 
-The fairest way to distribute candy!
+The fairest way to distribute candy! Thanks to 
+[summasmiff](https://github.com/summasmiff) for the logo!
 
 ## How to Develop
 
