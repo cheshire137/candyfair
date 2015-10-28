@@ -17,6 +17,11 @@
   <% if user_signed_in? %>
     <nav role="navigation" class="grey darken-4 white-text nav-container">
       <div class="container">
+        <ul class="left">
+          <% if content_for? :title %>
+            <%= yield :title %>
+          <% end %>
+        </ul>
         <ul class="right">
           <li><a href="#">People</a></li>
           <li>

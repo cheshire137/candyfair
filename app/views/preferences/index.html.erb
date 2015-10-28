@@ -1,0 +1,41 @@
+<% content_for :title do %>
+  <li>
+    <%= link_to 'Candies', candies_path %> /
+    <%= link_to "#{@person}'s Preferences", person_preferences_path(@person) %>
+  </li>
+<% end %>
+
+<ul class="preferences-list">
+  <% @preferences.each do |candy_name, data| %>
+    <li>
+      <h2><%= candy_name %></h2>
+      <ol class="preference">
+        <li class="hate<%= ' active' if data.key?(:hate) %>">
+          <a href="#" class="tooltipped" data-position="top" data-tooltip="Hate">
+            <span class="preference-icon"></span>
+          </a>
+        </li>
+        <li class="dislike<%= ' active' if data.key?(:dislike) %>">
+          <a href="#" class="tooltipped" data-position="top" data-tooltip="Dislike">
+            <span class="preference-icon"></span>
+          </a>
+        </li>
+        <li class="indifferent<%= ' active' unless data.key?(:preference) %>">
+          <a href="#" class="tooltipped" data-position="top" data-tooltip="Indifferent">
+            <span class="preference-icon"></span>
+          </a>
+        </li>
+        <li class="like<%= ' active' if data.key?(:like) %>">
+          <a href="#" class="tooltipped" data-position="top" data-tooltip="Like">
+            <span class="preference-icon"></span>
+          </a>
+        </li>
+        <li class="love<%= ' active' if data.key?(:love) %>">
+          <a href="#" class="tooltipped" data-position="top" data-tooltip="Love">
+            <span class="preference-icon"></span>
+          </a>
+        </li>
+      </ol>
+    </li>
+  <% end %>
+</ul>

@@ -1,18 +1,7 @@
-<p>What candy do you have?</p>
-
-<ul>
-  <% @candies.each do |candy| %>
-    <li><%= candy %></li>
-  <% end %>
-</ul>
-
-<hr>
-
-<ul>
+<ul class="people-list">
   <% @people.each do |person| %>
     <li>
-      <%= person %>:
-      <%= person.preferences_summary %>
+      <%= link_to person, person_preferences_path(person) %>
     </li>
   <% end %>
 </ul>

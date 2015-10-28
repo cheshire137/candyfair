@@ -1,0 +1,151 @@
+$love-color: #4caf50;
+$like-color: #8bc34a;
+$indifferent-color: #616161;
+$dislike-color: #03a9f4;
+$hate-color: #ab47bc;
+$eye-size: 4px;
+$lip-thickness: 3px;
+
+.preferences-list {
+  h2 {
+    font-size: 1.64rem;
+    line-height: 110%;
+    margin: 0.82rem 0 0.656rem 0;
+  }
+
+  & > li {
+    display: inline-block;
+    margin: 5px 20px;
+
+    a {
+      display: block;
+    }
+  }
+
+  .preference {
+    position: relative;
+    padding-left: 0;
+
+    li {
+      display: inline-block;
+    }
+
+    .preference-icon {
+      display: block;
+      border-width: 3px;
+      border-style: solid;
+      border-radius: 20px;
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 9px;
+        left: 50%;
+        width: $eye-size * 3;
+        height: $eye-size;
+        margin-left: 0 - $eye-size - 2;
+        border-left-width: $eye-size;
+        border-right-width: $eye-size;
+        border-left-style: solid;
+        border-right-style: solid;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 14px;
+        height: 7px;
+        margin-left: -7px;
+      }
+    }
+
+    .hate .preference-icon {
+      border-color: $hate-color;
+
+      &:before {
+        border-left-color: $hate-color;
+        border-right-color: $hate-color;
+      }
+
+      &:after {
+        top: 20px;
+        border-top: $lip-thickness solid $hate-color;
+        border-left: $lip-thickness solid $hate-color;
+        border-right: $lip-thickness solid $hate-color;
+        border-radius: 8px 8px 0 0;
+        background-color: $hate-color;
+      }
+    }
+
+    .dislike .preference-icon {
+      border-color: $dislike-color;
+
+      &:before {
+        border-left-color: $dislike-color;
+        border-right-color: $dislike-color;
+      }
+
+      &:after {
+        top: 20px;
+        border-top: $lip-thickness solid $dislike-color;
+        border-left: $lip-thickness solid $dislike-color;
+        border-right: $lip-thickness solid $dislike-color;
+        border-radius: 8px 8px 0 0;
+      }
+    }
+
+    .indifferent .preference-icon {
+      border-color: $indifferent-color;
+
+      &:before {
+        border-left-color: $indifferent-color;
+        border-right-color: $indifferent-color;
+      }
+
+      &:after {
+        top: 17px;
+        border-bottom: $lip-thickness solid $indifferent-color;
+      }
+    }
+
+    .like .preference-icon {
+      border-color: $like-color;
+
+      &:before {
+        border-left-color: $like-color;
+        border-right-color: $like-color;
+      }
+
+      &:after {
+        top: 20px;
+        border-bottom: $lip-thickness solid $like-color;
+        border-left: $lip-thickness solid $like-color;
+        border-right: $lip-thickness solid $like-color;
+        border-radius: 0 0 8px 8px;
+      }
+    }
+
+    .love .preference-icon {
+      border-color: $love-color;
+
+      &:before {
+        border-left-color: $love-color;
+        border-right-color: $love-color;
+      }
+
+      &:after {
+        top: 20px;
+        border-bottom: $lip-thickness solid $love-color;
+        border-left: $lip-thickness solid $love-color;
+        border-right: $lip-thickness solid $love-color;
+        border-radius: 0 0 8px 8px;
+        background-color: $love-color;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ class CreatePeople < ActiveRecord::Migration
   def change
     create_table :people do |t|
       t.string :name, null: false
+      t.string :slug
       t.integer :created_by_user_id, null: false
       t.timestamps null: false
     end

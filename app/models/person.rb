@@ -1,8 +1,12 @@
 class Person < ActiveRecord::Base
+  extend FriendlyId
+
   belongs_to :created_by_user, class_name: 'User'
 
   validates :name, :created_by_user, presence: true
   validates :name, uniqueness: {scope: [:created_by_user_id]}
+
+  friendly_id :name, use: [:slugged, :finders]
 
   has_many :preferences
 
