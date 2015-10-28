@@ -40,7 +40,7 @@ class Candy < ActiveRecord::Base
   }
 
   scope :favored_by_one, ->{
-    candy_ids = Preference.select(:candy_id).group(:candy_id).
+    candy_ids = Preference.favorable.select(:candy_id).group(:candy_id).
                            having('COUNT(id) = 1')
     where(id: candy_ids)
   }

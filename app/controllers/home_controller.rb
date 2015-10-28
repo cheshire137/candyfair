@@ -27,7 +27,7 @@ class HomeController < ApplicationController
   def get_favored_by_one
     favored_by_one = {}
     Candy.favored_by_one.order(:name).each do |candy|
-      key = candy.preferences.first.person.name
+      key = candy.preferences.favorable.first.person.name
       favored_by_one[key] ||= []
       favored_by_one[key] << candy.name
     end
