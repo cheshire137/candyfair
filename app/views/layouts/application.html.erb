@@ -22,7 +22,12 @@
           <% end %>
         </ul>
         <ul class="right">
-          <li><a href="#">People</a></li>
+          <li>
+            <%= link_to 'Candies', candies_path %>
+          </li>
+          <li>
+            <%= link_to 'People', people_path %>
+          </li>
           <li>
             <%= link_to 'Sign Out', destroy_user_session_path %>
           </li>

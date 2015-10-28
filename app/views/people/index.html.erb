@@ -1,0 +1,27 @@
+<% content_for :title do %>
+  <li><%= link_to 'People', people_path %></li>
+<% end %>
+
+<ul class="people-list">
+  <% @people.each do |person| %>
+    <li>
+      <ul class="person-preferences">
+        <% type_index = 0 %>
+        <% person.preferences_summary.each do |type, candies| %>
+          <li class="preference-<%= type %> preference-<%= type_index %>">
+            <% if type_index == 0 %>
+              <%= link_to person, person_preferences_path(person) %>
+            <% else %>
+              &mdash;
+            <% end %>
+            <%= type %>
+            <% candies.each_with_index do |candy, i| %>
+              <strong><%= candy %></strong><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %>
+            <% end %>
+          </li>
+          <% type_index += 1 %>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>

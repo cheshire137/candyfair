@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :candies, only: [:index]
 
-  resources :people, only: [] do
+  resources :people, only: [:index] do
     resources :preferences, only: [:index, :create, :destroy]
   end
 

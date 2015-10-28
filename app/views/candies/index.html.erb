@@ -1,7 +1,3 @@
-<ul class="people-list">
-  <% @people.each do |person| %>
-    <li>
-      <%= link_to person, person_preferences_path(person) %>
-    </li>
-  <% end %>
-</ul>
+<% content_for :title do %>
+  <li><%= link_to 'Candies', candies_path %></li>
+<% end %>

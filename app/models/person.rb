@@ -13,16 +13,15 @@ class Person < ActiveRecord::Base
   def to_s ; name ; end
 
   def preferences_summary
-    if preferences.count < 1
-      return 'no preferences'
-    end
     types = {}
-    preferences.map {|p|
-      types[p.type] ||= []
-      types[p.type] << p.candy.name
-    }
-    types.map {|type, candies|
-      "#{type.downcase}s #{candies.join(', ')}"
-    }.join('; ')
+    preferences.each do |p|
+      key = p.type.downcase + 's'
+      types[key] ||= []
+      types[key] << p.candy
+    end
+    if types.empty?
+      types[''] = []
+    end
+    types
   end
 end
