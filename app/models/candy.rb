@@ -31,14 +31,18 @@ class Candy < ActiveRecord::Base
   scope :favored_by_one, ->{
     candy_ids = Preference.select(:candy_id).group(:candy_id).
                            having('COUNT(id) = 1')
-    joins(:preferences).where(preferences: {type: %w(Like Love)},
-                              id: candy_ids)
+    where(id: candy_ids)
   }
 
   scope :favored_by_none, ->{
-    favored_candy_ids = Preference.select(:candy_id).
-                                   where(type: %w(Like Love))
+    favored_candy_ids = Preference.select(:candy_id).favorable
     where.not(id: favored_candy_ids)
+  }
+
+  scope :favored_by_many, ->{
+    favored_candy_ids = Preference.select(:candy_id).favorable.
+                                   group(:candy_id).having('COUNT(id) > 1')
+    where(id: favored_candy_ids)
   }
 
   def percentage_hate

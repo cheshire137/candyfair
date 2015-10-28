@@ -11,4 +11,6 @@ class Preference < ActiveRecord::Base
   scope :for_person, ->(person) { where(person_id: person) }
 
   scope :for_candy, ->(candy) { where(candy_id: candy) }
+
+  scope :favorable, ->{ where(type: %w(Like Love)) }
 end
