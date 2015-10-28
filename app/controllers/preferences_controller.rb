@@ -12,6 +12,29 @@ class PreferencesController < ApplicationController
     end
   end
 
+  def create
+    @preference = Preference.for_person(@person).for_candy(params[:candy_id]).
+                             first_or_initialize
+    @preference.type = params[:type]
+    unless @preference.save
+      render json: @preference.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @preference = Preference.for_person(@person).for_candy(params[:candy_id]).
+                             first
+    unless @preference
+      head :no_content
+      return
+    end
+    if @preference.destroy
+      head :no_content
+    else
+      render json: @preference.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_person

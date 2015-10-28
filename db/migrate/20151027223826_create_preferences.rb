@@ -6,7 +6,7 @@ class CreatePreferences < ActiveRecord::Migration
       t.integer :person_id, null: false
       t.timestamps null: false
     end
-    add_index :preferences, [:type, :candy_id, :person_id], unique: true
+    add_index :preferences, [:candy_id, :person_id], unique: true
     add_index :preferences, :candy_id
     add_index :preferences, :person_id
   end

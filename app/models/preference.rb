@@ -5,6 +5,10 @@ class Preference < ActiveRecord::Base
   belongs_to :person
 
   validates :candy, :person, :type, presence: true
-  validates :type, uniqueness: {scope: [:candy_id, :person_id]}
+  validates :candy_id, uniqueness: {scope: [:person_id]}
   validates :type, inclusion: {in: VALID_TYPES}
+
+  scope :for_person, ->(person) { where(person_id: person) }
+
+  scope :for_candy, ->(candy) { where(candy_id: candy) }
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :candies, only: [:index]
 
   resources :people, only: [] do
-    resources :preferences, only: [:index]
+    resources :preferences, only: [:index, :create, :destroy]
   end
 
   root 'home#index'

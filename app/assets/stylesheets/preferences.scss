@@ -19,6 +19,12 @@ $lip-thickness: 3px;
 
     a {
       display: block;
+
+      &:hover, &:focus {
+        .preference-icon {
+          opacity: 1;
+        }
+      }
     }
   }
 
@@ -28,6 +34,12 @@ $lip-thickness: 3px;
 
     li {
       display: inline-block;
+
+      &.active {
+        .preference-icon {
+          opacity: 1;
+        }
+      }
     }
 
     .preference-icon {
@@ -39,6 +51,12 @@ $lip-thickness: 3px;
       display: inline-block;
       width: 40px;
       height: 40px;
+      opacity: 0.75;
+      -webkit-transition: all 0.25s ease-in-out;
+      -moz-transition: all 0.25s ease-in-out;
+      -ms-transition: all 0.25s ease-in-out;
+      -o-transition: all 0.25s ease-in-out;
+      transition: all 0.25s ease-in-out;
 
       &:before {
         content: "";
@@ -64,87 +82,127 @@ $lip-thickness: 3px;
       }
     }
 
-    .hate .preference-icon {
-      border-color: $hate-color;
-
-      &:before {
-        border-left-color: $hate-color;
-        border-right-color: $hate-color;
+    .hate {
+      &.active {
+        .preference-icon {
+          background-color: lighten($hate-color, 25%);
+        }
       }
 
-      &:after {
-        top: 20px;
-        border-top: $lip-thickness solid $hate-color;
-        border-left: $lip-thickness solid $hate-color;
-        border-right: $lip-thickness solid $hate-color;
-        border-radius: 8px 8px 0 0;
-        background-color: $hate-color;
-      }
-    }
+      .preference-icon {
+        border-color: $hate-color;
 
-    .dislike .preference-icon {
-      border-color: $dislike-color;
+        &:before {
+          border-left-color: $hate-color;
+          border-right-color: $hate-color;
+        }
 
-      &:before {
-        border-left-color: $dislike-color;
-        border-right-color: $dislike-color;
-      }
-
-      &:after {
-        top: 20px;
-        border-top: $lip-thickness solid $dislike-color;
-        border-left: $lip-thickness solid $dislike-color;
-        border-right: $lip-thickness solid $dislike-color;
-        border-radius: 8px 8px 0 0;
+        &:after {
+          top: 20px;
+          border-top: $lip-thickness solid $hate-color;
+          border-left: $lip-thickness solid $hate-color;
+          border-right: $lip-thickness solid $hate-color;
+          border-radius: 8px 8px 0 0;
+          background-color: $hate-color;
+        }
       }
     }
 
-    .indifferent .preference-icon {
-      border-color: $indifferent-color;
-
-      &:before {
-        border-left-color: $indifferent-color;
-        border-right-color: $indifferent-color;
+    .dislike {
+      &.active {
+        .preference-icon {
+          background-color: lighten($dislike-color, 35%);
+        }
       }
 
-      &:after {
-        top: 17px;
-        border-bottom: $lip-thickness solid $indifferent-color;
-      }
-    }
+      .preference-icon {
+        border-color: $dislike-color;
 
-    .like .preference-icon {
-      border-color: $like-color;
+        &:before {
+          border-left-color: $dislike-color;
+          border-right-color: $dislike-color;
+        }
 
-      &:before {
-        border-left-color: $like-color;
-        border-right-color: $like-color;
-      }
-
-      &:after {
-        top: 20px;
-        border-bottom: $lip-thickness solid $like-color;
-        border-left: $lip-thickness solid $like-color;
-        border-right: $lip-thickness solid $like-color;
-        border-radius: 0 0 8px 8px;
+        &:after {
+          top: 20px;
+          border-top: $lip-thickness solid $dislike-color;
+          border-left: $lip-thickness solid $dislike-color;
+          border-right: $lip-thickness solid $dislike-color;
+          border-radius: 8px 8px 0 0;
+        }
       }
     }
 
-    .love .preference-icon {
-      border-color: $love-color;
-
-      &:before {
-        border-left-color: $love-color;
-        border-right-color: $love-color;
+    .indifferent {
+      &.active {
+        .preference-icon {
+          background-color: lighten($indifferent-color, 35%);
+        }
       }
 
-      &:after {
-        top: 20px;
-        border-bottom: $lip-thickness solid $love-color;
-        border-left: $lip-thickness solid $love-color;
-        border-right: $lip-thickness solid $love-color;
-        border-radius: 0 0 8px 8px;
-        background-color: $love-color;
+      .preference-icon {
+        border-color: $indifferent-color;
+
+        &:before {
+          border-left-color: $indifferent-color;
+          border-right-color: $indifferent-color;
+        }
+
+        &:after {
+          top: 17px;
+          border-bottom: $lip-thickness solid $indifferent-color;
+        }
+      }
+    }
+
+    .like {
+      &.active {
+        .preference-icon {
+          background-color: lighten($like-color, 30%);
+        }
+      }
+
+      .preference-icon {
+        border-color: $like-color;
+
+        &:before {
+          border-left-color: darken($like-color, 5%);
+          border-right-color: darken($like-color, 5%);
+        }
+
+        &:after {
+          top: 20px;
+          border-bottom: $lip-thickness solid darken($like-color, 5%);
+          border-left: $lip-thickness solid darken($like-color, 5%);
+          border-right: $lip-thickness solid darken($like-color, 5%);
+          border-radius: 0 0 8px 8px;
+        }
+      }
+    }
+
+    .love {
+      &.active {
+        .preference-icon {
+          background-color: lighten($love-color, 30%);
+        }
+      }
+
+      .preference-icon {
+        border-color: $love-color;
+
+        &:before {
+          border-left-color: $love-color;
+          border-right-color: $love-color;
+        }
+
+        &:after {
+          top: 20px;
+          border-bottom: $lip-thickness solid $love-color;
+          border-left: $lip-thickness solid $love-color;
+          border-right: $lip-thickness solid $love-color;
+          border-radius: 0 0 8px 8px;
+          background-color: $love-color;
+        }
       }
     }
   }
