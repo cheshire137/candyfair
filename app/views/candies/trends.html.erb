@@ -2,6 +2,11 @@
   <li><%= link_to 'Trends', trends_candies_path %></li>
 <% end %>
 
+<p>
+  <strong><%= @hate_percentage %>%</strong> of people think
+  <strong><%= @hated_candy %></strong> is a bullshit candy.
+</p>
+
 <div class="row">
   <div class="col s6">
     <% if @popular_candies.to_a.size > 0 %>
@@ -11,10 +16,6 @@
           <li><%= candy %></li>
         <% end %>
       </ol>
-    <% end %>
-
-    <% if @popular_candies.to_a.size > 0 && @disliked_candies.to_a.size > 0 %>
-      <hr>
     <% end %>
 
     <% if @disliked_candies.to_a.size > 0 %>
@@ -42,10 +43,6 @@
       </ol>
     <% end %>
 
-    <% if @boring_candies.to_a.size > 0 && @divisive_candies.to_a.size > 0 %>
-      <hr>
-    <% end %>
-
     <% if @boring_candies.to_a.size > 0 %>
       <h3>Most Boring Candies</h3>
       <ol>
@@ -55,12 +52,7 @@
       </ol>
     <% end %>
 
-    <% if @boring_candies.to_a.size > 0 && @unrated_candies.to_a.size > 0 %>
-      <hr>
-    <% end %>
-
     <% if @unrated_candies.to_a.size > 0 %>
-      <h3>Unrated Candies</h3>
       <p>
         <strong><%= @unrated_candies.to_sentence %></strong>
         <% if @unrated_candies.to_a.size == 1 %>
@@ -73,10 +65,3 @@
     <% end %>
   </div>
 </div>
-
-<hr>
-
-<p>
-  <strong><%= @hate_percentage %>%</strong> of people think
-  <strong><%= @hated_candy %></strong> is a bullshit candy.
-</p>

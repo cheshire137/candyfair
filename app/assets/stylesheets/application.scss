@@ -15,6 +15,8 @@ main {
 }
 
 .main-content {
+  padding-top: 15px;
+
   a, a:link, a:visited, a:active {
     color: #ff6f00;
     -webkit-transition: all 0.25s ease-in-out;
@@ -29,9 +31,9 @@ main {
   }
 
   h3 {
-    font-size: 2.28rem;
+    font-size: 1.64rem;
     line-height: 110%;
-    margin: 1.14rem 0 0.912rem 0;
+    margin: 0.82rem 0 0.656rem 0;
   }
 }
 

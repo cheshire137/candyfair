@@ -3,3 +3,9 @@ a.remove-candy {
     text-decoration: line-through;
   }
 }
+
+.main-content {
+  ol + h3, ol + p {
+    margin-top: 2.46rem;
+  }
+}
