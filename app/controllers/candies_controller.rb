@@ -1,13 +1,14 @@
 class CandiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_candy, only: [:show, :update]
-  before_action :set_candies_list, only: [:index, :show]
 
   def index
     @candies = Candy.order(:name)
+    set_candies_list
   end
 
   def show
+    set_candies_list
   end
 
   def create
@@ -20,9 +21,9 @@ class CandiesController < ApplicationController
     end
   end
 
-  def update
-    @candy.name = params[:name]
-    if @candy.save
+  def destroy
+    @candy = Candy.find_by_name(params[:name])
+    if @candy.destroy
       set_candies_list
       render action: 'show'
     else
@@ -37,7 +38,7 @@ class CandiesController < ApplicationController
   end
 
   def set_candies_list
-    @candies_list = Candy.order(:name).select(:name).pluck(:name).
-                          to_sentence + '.'
+    @candies ||= Candy.order(:name)
+    @candies_list = @candies.select(:name).pluck(:name).to_sentence + '.'
   end
 end

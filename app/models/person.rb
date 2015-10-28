@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
 
   friendly_id :name, use: [:slugged, :finders]
 
-  has_many :preferences
+  has_many :preferences, dependent: :destroy
 
   def to_s ; name ; end
 
