@@ -24,7 +24,9 @@ class CandiesController < ApplicationController
   def add
     success = true
     params[:selections].each do |candy_id, quantity|
-      selection = Selection.new(candy_id: candy_id, quantity: quantity)
+      next if quantity.to_i == 0
+      selection = Selection.new(candy_id: candy_id, user: current_user,
+                                quantity: quantity)
       success = success and selection.save
     end
     if success

@@ -5,6 +5,7 @@
 <h3>Your Current Selection</h3>
 
 <form method="POST" action="<%= add_candies_path %>" class="selection-form col s12">
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
   <div class="row">
     <% @selections.each do |selection| %>
       <div class="col s3">
