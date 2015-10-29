@@ -3,18 +3,20 @@ class HomeController < ApplicationController
   before_action :redirect_if_no_data, only: [:index]
 
   def index
-    @candies = Candy.order(:name)
+    @candies = current_user.candies.order(:name)
     @favored_by_one = get_favored_by_one
-    @favored_by_none = Candy.favored_by_none.order(:name).pluck(:name)
+    @favored_by_none = current_user.candies.favored_by_none.order(:name).
+                                    pluck(:name)
     @favored_by_many = get_favored_by_many
-    @unrated = Candy.unrated.order(:name).pluck(:name)
+    @unrated = current_user.candies.unrated.order(:name).pluck(:name)
   end
 
   private
 
   def get_favored_by_many
     favored_by_many = {}
-    candies = Candy.favored_by_many.includes(preferences: :person).order(:name)
+    candies = current_user.candies.favored_by_many.
+                           includes(preferences: :person).order(:name)
     candies.each do |candy|
       key = candy.name
       favored_by_many[key] ||= {}
@@ -26,7 +28,7 @@ class HomeController < ApplicationController
 
   def get_favored_by_one
     favored_by_one = {}
-    Candy.favored_by_one.order(:name).each do |candy|
+    current_user.candies.favored_by_one.order(:name).each do |candy|
       key = candy.preferences.favorable.first.person.name
       favored_by_one[key] ||= []
       favored_by_one[key] << candy.name

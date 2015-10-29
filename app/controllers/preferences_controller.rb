@@ -3,9 +3,9 @@ class PreferencesController < ApplicationController
   before_action :set_person
 
   def index
-    @candies = Candy.order(:name)
+    @candies = current_user.candies.order(:name)
     @preferences = Hash[@candies.map {|c| [c.name, {candy: c}] }]
-    @person.preferences.each do |preference|
+    @person.preferences.for_candy(@candies).each do |preference|
       @preferences[preference.candy.name][:preference] = preference
       type = preference.type.downcase.to_sym
       @preferences[preference.candy.name][type] = true
@@ -38,6 +38,6 @@ class PreferencesController < ApplicationController
   private
 
   def set_person
-    @person = Person.find(params[:person_id])
+    @person = current_user.people.find(params[:person_id])
   end
 end
