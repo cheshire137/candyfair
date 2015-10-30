@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
          authentication_keys: [:username]
 
   validates :username, presence: true, uniqueness: {case_sensitive: false}
+  validates :password, presence: true, confirmation: true,
+                       if: :password_required?
+  validates :password, length: {in: 6..72}
 
   has_many :people, dependent: :destroy
   has_many :preferences, through: :people
@@ -16,5 +19,11 @@ class User < ActiveRecord::Base
     Candy::AMERICAN_SET.each do |name|
       Candy.create(name: name, user_id: id)
     end
+  end
+
+  private
+
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
   end
 end

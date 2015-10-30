@@ -95,3 +95,20 @@ hr {
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.field_with_errors {
+  display: inline;
+
+  label {
+    color: #d50000;
+  }
+}
+
+#error_explanation {
+  color: #d50000;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+}
