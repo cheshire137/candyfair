@@ -106,9 +106,9 @@ class Candy < ActiveRecord::Base
     }[0...limit]
   end
 
-  def percentage_hate
-    total_people = Person.count
-    total_haters = Hate.where(candy_id: id).count
+  def percentage_hate user
+    total_people = user.people.count
+    total_haters = Hate.for_user(user).where(candy_id: id).count
     ((total_haters / total_people.to_f) * 100).round
   end
 

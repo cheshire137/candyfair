@@ -16,7 +16,7 @@ class CandiesController < ApplicationController
     @disliked_candies = Candy.disliked.for_user(current_user).limit(5)
     if hate_pref=Hate.for_user(current_user).sample
       @hated_candy = hate_pref.candy
-      @hate_percentage = @hated_candy.percentage_hate
+      @hate_percentage = @hated_candy.percentage_hate(current_user)
     end
     @boring_candies = Candy.boring.for_user(current_user).limit(5)
     @unrated_candies = Candy.unrated.for_user(current_user).order(:name).
