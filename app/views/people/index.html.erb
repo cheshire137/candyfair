@@ -2,6 +2,10 @@
   <li><%= link_to 'People', people_path %></li>
 <% end %>
 
+<p data-has-preferences="<%= @has_preferences %>" id="new-people-message"<%= raw ' style="display: none"' if @people.count < 1 || @has_preferences %>>
+  Now, click your name below and rate some candy!
+</p>
+
 <ul class="people-list">
   <% @people.each do |person| %>
     <li>
@@ -26,9 +30,11 @@
   <% end %>
 </ul>
 
-<% if @people.count > 0 %>
-  <hr>
-<% end %>
+<hr id="people-divider" <%= raw ' style="display: none"' if @people.count < 1 %>>
+
+<p id="add-people-instructions"<%= raw ' style="display: none"' if @people.count > 0 %>>
+  Who do you want to share candy with? Add them below! Be sure to add yourself.
+</p>
 
 <p id="person-error" class="alert deep-orange lighten-3" style="display: none"></p>
 

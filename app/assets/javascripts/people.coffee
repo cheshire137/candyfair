@@ -1,5 +1,12 @@
 update_people_list = (response) ->
   list = $('.people-list')
+  new_people_message = $('#new-people-message')
+  has_preferences = new_people_message.data('has-preferences') == 'true'
+  $('#add-people-instructions').hide()
+  if list.find('li').length == 0 && !has_preferences
+    new_people_message.show()
+  else
+    new_people_message.hide()
   li = document.createElement('li')
   pref_list = document.createElement('ul')
   pref_list.className = 'person-preferences'
@@ -12,6 +19,7 @@ update_people_list = (response) ->
   pref_list.appendChild pref_li
   li.appendChild pref_list
   list[0].appendChild li
+  $('#people-divider').show()
 
 $('form.add-person').on 'submit', (e) ->
   e.preventDefault()

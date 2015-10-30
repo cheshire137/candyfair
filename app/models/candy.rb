@@ -1,4 +1,25 @@
 class Candy < ActiveRecord::Base
+  AMERICAN_SET = ['100 Grand', '3 Musketeers', '5th Avenue', 'AirHeads',
+                  'Almond Joy', 'Bit-O-Honey', 'Bottle Caps', 'Butterfinger',
+                  'Cadbury Cream Egg', 'Candy Cane', 'Candy Corn', 'Caramels',
+                  'Charleston Chew', 'Circus Peanuts', 'Conversation Hearts',
+                  'Cow Tales', 'Ding Dongs', 'Dots', 'Dum Dums', 'Fudge Rounds',
+                  'Fun Dip', 'Gummi Worms', 'Heath', "Hershey's",
+                  "Hershey's Kisses", 'Jelly Bellies', 'Jolly Rancher',
+                  'Junior Mints', 'Kit Kat', 'LaffyTaffy', 'Lemonheads',
+                  'Licorice', 'LifeSavers', 'Mars', 'Mary Janes',
+                  'Mike and Ikes', 'Milk Duds', 'MilkyWay', 'M&Ms', 'Mounds',
+                  'Necco Wafers', 'Nerds', 'Nestlé Crunch',
+                  'Oatmeal Cream Pies', 'PayDay', 'Peach Rings', 'Peeps', 'Pez',
+                  'Pixy Stix', 'RedVines', "Reese's Cups", "Reese's Pieces",
+                  'Riesen', 'Rolos', 'Skittles', 'Smarties', 'Snickers',
+                  'Sour Patch Kids', 'Starburst', 'Star Crunch', 'Swedish Fish',
+                  'SweeTarts', 'Swiss Cake Rolls', 'Toblerone', 'Tootsie Roll',
+                  'Tootsie Roll Pops', 'Trolli Strawberry Puffs', 'Twinkies',
+                  'Twix', 'Twizzlers', 'WarHeads', 'Whatchamacallit',
+                  'Whoppers', 'York Peppermint Patties', 'Zebra Cakes',
+                  'Zero'].freeze
+
   belongs_to :user
 
   before_validation :normalize_name
