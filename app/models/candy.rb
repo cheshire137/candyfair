@@ -92,9 +92,18 @@ class Candy < ActiveRecord::Base
   scope :unrated, ->{ where.not(id: Preference.select(:candy_id)) }
 
   def self.most_divisive user, limit
-    for_user(user).divisive.sort_by {|candy|
-      (candy.love_count - candy.hate_count).abs
-    }.reverse[0...limit]
+    divisive_candies = for_user(user).divisive
+    return divisive_candies if divisive_candies.to_a.size < 1
+    max_love_count = divisive_candies.max {|c| c.love_count }.love_count
+    divisive_candies.sort {|candy_a, candy_b|
+      candy_a_diff = (candy_a.love_count - candy_a.hate_count).abs
+      candy_b_diff = (candy_b.love_count - candy_b.hate_count).abs
+
+      candy_a_love = max_love_count - candy_a.love_count
+      candy_b_love = max_love_count - candy_b.love_count
+
+      [candy_a_diff, candy_a_love] <=> [candy_b_diff, candy_b_love]
+    }[0...limit]
   end
 
   def percentage_hate
