@@ -22,6 +22,7 @@ class CandiesController < ApplicationController
     @unrated_candies = Candy.unrated.for_user(current_user).order(:name).
                              pluck(:name)
     @divisive_candies = Candy.most_divisive(current_user, 5)
+    @pickiest_eaters = Person.order_by_pickiness(current_user, 5)
   end
 
   def create

@@ -28,8 +28,7 @@
         <% end %>
       </ol>
     <% end %>
-  </div>
-  <div class="col s6">
+
     <% if @divisive_candies.to_a.size > 0 %>
       <h3>Most Divisive Candies</h3>
       <ol>
@@ -39,6 +38,23 @@
             <em class="grey-text">
               <%= pluralize candy.love_count, 'love' %>,
               <%= pluralize candy.hate_count, 'hate' %>
+            </em>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </div>
+  <div class="col s6">
+    <% if @pickiest_eaters.size > 0 %>
+      <h3>Pickiest Eaters</h3>
+      <ol>
+        <% @pickiest_eaters.each do |person| %>
+          <li>
+            <%= person %>&nbsp;&nbsp;
+            <em class="grey-text">
+              <%= person.favorable_preferences.count %> favorable
+              versus
+              <%= person.unfavorable_preferences.count %> unfavorable
             </em>
           </li>
         <% end %>
