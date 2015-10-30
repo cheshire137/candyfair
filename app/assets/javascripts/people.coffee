@@ -46,27 +46,23 @@ $('select.filter-type').change (e) ->
   $('select.filter-candy').val('')
   reset_filters()
   type = $(e.target).val()
-  if type == ''
-    reset_filters()
-  else
-    type = type.toLowerCase() + 's'
-    $('li.preference .preference-data, li.preference:empty').hide()
-    $('li.preference-' + type + ' .preference-data').show()
+  return if type == ''
+  type = type.toLowerCase() + 's'
+  $('li.preference .preference-data, li.preference:empty').hide()
+  $('li.preference-' + type + ' .preference-data').show()
 
 $('select.filter-candy').change (e) ->
   $('select.filter-type').val('')
   reset_filters()
   candy_id = $(e.target).val()
-  if candy_id == ''
-    reset_filters()
-  else
-    $('.people-list .candy').hide()
-    $('.people-list .candy-' + candy_id).show().find('.candy-separator').hide()
-    $('li.preference .preference-data').each ->
-      pref = $(this)
-      pref_candies = pref.data('candy-ids') + ''
-      pref_candies = pref_candies.split(',')
-      if pref_candies.indexOf(candy_id) < 0
-        pref.hide()
-      else
-        pref.show()
+  return if candy_id == ''
+  $('.people-list .candy').hide()
+  $('.people-list .candy-' + candy_id).show().find('.candy-separator').hide()
+  $('li.preference .preference-data').each ->
+    pref = $(this)
+    pref_candies = pref.data('candy-ids') + ''
+    pref_candies = pref_candies.split(',')
+    if pref_candies.indexOf(candy_id) < 0
+      pref.hide()
+    else
+      pref.show()

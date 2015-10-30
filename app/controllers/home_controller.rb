@@ -5,10 +5,11 @@ class HomeController < ApplicationController
   def index
     @candies = current_user.candies.order(:name)
     @favored_by_one = get_favored_by_one
-    @favored_by_none = current_user.candies.favored_by_none.order(:name).
-                                    pluck(:name)
+    @favored_by_none = current_user.candies.favored_by_none.order(:name)
     @favored_by_many = get_favored_by_many
-    @unrated = current_user.candies.unrated.order(:name).pluck(:name)
+    @unrated = current_user.candies.unrated.order(:name)
+    @has_preferences = current_user.preferences.count > 0
+    @people = current_user.people.order(:name)
   end
 
   private
@@ -20,8 +21,9 @@ class HomeController < ApplicationController
     candies.each do |candy|
       key = candy.name
       favored_by_many[key] ||= {}
-      favored_by_many[key][:loves] = candy.loves.map {|pref| pref.person.name }
-      favored_by_many[key][:likes] = candy.likes.map {|pref| pref.person.name }
+      favored_by_many[key][:id] = candy.id
+      favored_by_many[key][:loves] = candy.loves.map(&:person)
+      favored_by_many[key][:likes] = candy.likes.map(&:person)
     end
     favored_by_many
   end
@@ -29,9 +31,12 @@ class HomeController < ApplicationController
   def get_favored_by_one
     favored_by_one = {}
     current_user.candies.favored_by_one.order(:name).each do |candy|
-      key = candy.preferences.favorable.first.person.name
-      favored_by_one[key] ||= []
-      favored_by_one[key] << candy.name
+      person = candy.preferences.favorable.first.person
+      key = person.name
+      favored_by_one[key] ||= {}
+      favored_by_one[key][:person_id] = person.id
+      favored_by_one[key][:candies] ||= []
+      favored_by_one[key][:candies] << candy
     end
     favored_by_one
   end

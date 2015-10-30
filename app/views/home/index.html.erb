@@ -2,17 +2,49 @@
   <li><%= link_to 'Home', root_path %></li>
 <% end %>
 
+<% if @has_preferences %>
+  <div class="filters">
+    <label for="filter-distribution-person">Filter:</label>
+    <div class="row">
+      <div class="col s6">
+        <select id="filter-distribution-person" class="filter-distribution-person browser-default">
+          <option value="" selected="selected">All people</option>
+          <% @people.each do |person| %>
+            <option value="<%= person.id %>"><%= person %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class="col s6">
+        <select class="filter-distribution-candy browser-default">
+          <option value="" selected="selected">All candies</option>
+          <% @candies.each do |candy| %>
+            <option value="<%= candy.id %>"><%= candy %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+<% end %>
+
+<p id="no-ratings-by-person-message" style="display: none">
+  <span class="person"></span> has not yet rated any candy. :(
+</p>
+
 <ul class="distribution-list">
-  <% @favored_by_one.each do |person, candies| %>
-    <li>
-      Give all the <strong><%= candies.to_sentence %></strong> to
+  <% @favored_by_one.each do |person, data| %>
+    <% candy_ids_str = data[:candies].map {|c| c.id.to_s }.join(',') %>
+    <li data-candy-ids="<%= candy_ids_str %>" data-person-ids="<%= data[:person_id] %>">
+      Give all the <strong><%= data[:candies].map(&:name).to_sentence %></strong> to
       <strong><%= person %></strong>.
     </li>
   <% end %>
 
   <% @favored_by_many.each do |candy, data| %>
     <% people = data[:loves] + data[:likes] %>
-    <li>
+    <% person_ids_str = people.map {|p| p.id.to_s }.join(',') %>
+    <li data-candy-ids="<%= data[:id] %>" data-person-ids="<%= person_ids_str %>">
       <% if people.size == 2 %>
         Split
       <% else %>
@@ -27,20 +59,24 @@
       <% else %>
         among
       <% end %>
-      <strong><%= people.to_sentence %></strong><% if data[:loves].empty? || data[:likes].empty? %>.<% else %>...<br>&nbsp;&nbsp;&nbsp;&nbsp;but <strong><%= data[:loves].to_sentence %></strong> should get more.
+      <strong><%= people.map(&:name).to_sentence %></strong><% if data[:loves].empty? || data[:likes].empty? %>.<% else %>...<br>&nbsp;&nbsp;&nbsp;&nbsp;but <strong><%= data[:loves].to_sentence %></strong> should get more.
       <% end %>
     </li>
   <% end %>
 
   <% if @favored_by_none.count > 0 %>
-    <li>
-      Throw away all the <strong><%= @favored_by_none.to_sentence %></strong>.
+    <% candy_ids_str = @favored_by_none.pluck(:id).join(',') %>
+    <li data-candy-ids="<%= candy_ids_str %>" data-person-ids="">
+      Throw away all the
+      <strong><%= @favored_by_none.pluck(:name).to_sentence %></strong>.
     </li>
   <% end %>
 
   <% if @unrated.size > 0 %>
-    <li>
-      The vote is still out on <strong><%= @unrated.to_sentence %></strong>.
+    <% candy_ids_str = @unrated.pluck(:id).join(',') %>
+    <li data-candy-ids="<%= candy_ids_str %>" data-person-ids="">
+      The vote is still out on
+      <strong><%= @unrated.pluck(:name).to_sentence %></strong>.
     </li>
   <% end %>
 </ul>
