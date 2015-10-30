@@ -1,5 +1,5 @@
 class Preference < ActiveRecord::Base
-  VALID_TYPES = ['Like', 'Dislike', 'Love', 'Hate'].freeze
+  VALID_TYPES = ['Love', 'Like', 'Dislike', 'Hate'].freeze
 
   belongs_to :candy
   belongs_to :person

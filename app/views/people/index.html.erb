@@ -6,22 +6,38 @@
   Now, click your name below and rate some candy!
 </p>
 
+<% if @has_preferences %>
+  <div class="filters col s12">
+    <label for="filter-type">Filter:</label>
+    <select id="filter-type" class="filter-type browser-default">
+      <option value="" selected="selected">All</option>
+      <% Preference::VALID_TYPES.each do |type| %>
+        <option value="<%= type %>"><%= type %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <hr>
+<% end %>
+
 <ul class="people-list">
   <% @people.each do |person| %>
     <li>
       <ul class="person-preferences">
         <% type_index = 0 %>
         <% person.preferences_summary.each do |type, candies| %>
-          <li class="preference-<%= type %> preference-<%= type_index %>">
+          <li class="preference preference-<%= type %> preference-<%= type_index %>">
             <% if type_index == 0 %>
               <%= link_to person, person_preferences_path(person) %>
             <% else %>
-              &mdash;
+              <span class="preference-data">&mdash;</span>
             <% end %>
-            <%= type %>
-            <% candies.each_with_index do |candy, i| %>
-              <strong><%= candy %></strong><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %><% if i == candies.length - 1 %>.<% end %>
-            <% end %>
+            <span class="preference-data">
+              <%= type %>
+              <% candies.each_with_index do |candy, i| %>
+                <strong><%= candy %></strong><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %><% if i == candies.length - 1 %>.<% end %>
+              <% end %>
+            </span>
           </li>
           <% type_index += 1 %>
         <% end %>

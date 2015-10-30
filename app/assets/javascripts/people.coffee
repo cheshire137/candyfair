@@ -37,3 +37,12 @@ $('form.add-person').on 'submit', (e) ->
     console.error 'failed to add new person', error
     $('#person-error').text('Could not add person').show()
   $.ajax(options).done(on_success).fail(on_error)
+
+$('select.filter-type').change (e) ->
+  type = $(e.target).val()
+  if type == ''
+    $('li.preference .preference-data, li.preference:empty').show()
+  else
+    type = type.toLowerCase() + 's'
+    $('li.preference .preference-data, li.preference:empty').hide()
+    $('li.preference-' + type + ' .preference-data').show()
