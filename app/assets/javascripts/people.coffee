@@ -38,11 +38,35 @@ $('form.add-person').on 'submit', (e) ->
     $('#person-error').text('Could not add person').show()
   $.ajax(options).done(on_success).fail(on_error)
 
+reset_filters = ->
+  $('li.preference .preference-data, li.preference:empty').show()
+  $('.people-list .candy, .people-list .candy .candy-separator').show()
+
 $('select.filter-type').change (e) ->
+  $('select.filter-candy').val('')
+  reset_filters()
   type = $(e.target).val()
   if type == ''
-    $('li.preference .preference-data, li.preference:empty').show()
+    reset_filters()
   else
     type = type.toLowerCase() + 's'
     $('li.preference .preference-data, li.preference:empty').hide()
     $('li.preference-' + type + ' .preference-data').show()
+
+$('select.filter-candy').change (e) ->
+  $('select.filter-type').val('')
+  reset_filters()
+  candy_id = $(e.target).val()
+  if candy_id == ''
+    reset_filters()
+  else
+    $('.people-list .candy').hide()
+    $('.people-list .candy-' + candy_id).show().find('.candy-separator').hide()
+    $('li.preference .preference-data').each ->
+      pref = $(this)
+      pref_candies = pref.data('candy-ids') + ''
+      pref_candies = pref_candies.split(',')
+      if pref_candies.indexOf(candy_id) < 0
+        pref.hide()
+      else
+        pref.show()

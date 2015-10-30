@@ -3,9 +3,10 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :destroy]
 
   def index
+    @candies = current_user.candies.order(:name)
     @people = current_user.people.includes(preferences: :candy).order(:name)
     @has_preferences = current_user.preferences.count > 0
-    @has_candies = current_user.candies.count > 0
+    @has_candies = @candies.count > 0
   end
 
   def show

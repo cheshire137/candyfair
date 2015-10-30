@@ -7,14 +7,26 @@
 </p>
 
 <% if @has_preferences %>
-  <div class="filters col s12">
+  <div class="filters">
     <label for="filter-type">Filter:</label>
-    <select id="filter-type" class="filter-type browser-default">
-      <option value="" selected="selected">All</option>
-      <% Preference::VALID_TYPES.each do |type| %>
-        <option value="<%= type %>"><%= type %></option>
-      <% end %>
-    </select>
+    <div class="row">
+      <div class="col s6">
+        <select id="filter-type" class="filter-type browser-default">
+          <option value="" selected="selected">All preferences</option>
+          <% Preference::VALID_TYPES.each do |type| %>
+            <option value="<%= type %>"><%= type %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class="col s6">
+        <select class="filter-candy browser-default">
+          <option value="" selected="selected">All candies</option>
+          <% @candies.each do |candy| %>
+            <option value="<%= candy.id %>"><%= candy %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
   </div>
 
   <hr>
@@ -26,16 +38,17 @@
       <ul class="person-preferences">
         <% type_index = 0 %>
         <% person.preferences_summary.each do |type, candies| %>
+          <% candy_ids_str = candies.map {|c| c.id.to_s }.join(',') %>
           <li class="preference preference-<%= type %> preference-<%= type_index %>">
             <% if type_index == 0 %>
               <%= link_to person, person_preferences_path(person) %>
             <% else %>
-              <span class="preference-data">&mdash;</span>
+              <span class="preference-data" data-candy-ids="<%= candy_ids_str %>">&mdash;</span>
             <% end %>
-            <span class="preference-data">
+            <span class="preference-data" data-candy-ids="<%= candy_ids_str %>">
               <%= type %>
               <% candies.each_with_index do |candy, i| %>
-                <strong><%= candy %></strong><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %><% if i == candies.length - 1 %>.<% end %>
+                <span class="candy candy-<%= candy.id %>"><strong><%= candy %></strong><span class="candy-separator"><% if i == candies.length - 2 %><% if candies.length > 2 %>,<% end %> and<% elsif i < candies.length - 1 %>, <% end %><% if i == candies.length - 1 %>.<% end %></span></span>
               <% end %>
             </span>
           </li>
