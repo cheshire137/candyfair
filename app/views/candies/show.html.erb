@@ -24,7 +24,7 @@
           <h3>Love</h3>
           <ul>
             <% @lovers.each do |person| %>
-              <li><%= person %></li>
+              <li><%= link_to person, person_preferences_path(person) %></li>
             <% end %>
           </ul>
         </div>
@@ -34,7 +34,7 @@
           <h3>Like</h3>
           <ul>
             <% @likers.each do |person| %>
-              <li><%= person %></li>
+              <li><%= link_to person, person_preferences_path(person) %></li>
             <% end %>
           </ul>
         </div>
@@ -44,7 +44,7 @@
           <h3>Dislike</h3>
           <ul>
             <% @dislikers.each do |person| %>
-              <li><%= person %></li>
+              <li><%= link_to person, person_preferences_path(person) %></li>
             <% end %>
           </ul>
         </div>
@@ -54,7 +54,7 @@
           <h3>Hate</h3>
           <ul>
             <% @haters.each do |person| %>
-              <li><%= person %></li>
+              <li><%= link_to person, person_preferences_path(person) %></li>
             <% end %>
           </ul>
         </div>
