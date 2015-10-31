@@ -3,6 +3,11 @@ class PreferencesController < ApplicationController
   before_action :set_person
 
   def index
+    @likes = @person.liked_candies.order(:name)
+    @loves = @person.loved_candies.order(:name)
+    @hates = @person.hated_candies.order(:name)
+    @dislikes = @person.disliked_candies.order(:name)
+    @has_preferences = @person.preferences.count > 0
     @candies = current_user.candies.order(:name)
     @preferences = Hash[@candies.map {|c| [c.name, {candy: c}] }]
     @person.preferences.for_candy(@candies).each do |preference|

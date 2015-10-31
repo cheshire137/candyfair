@@ -6,6 +6,53 @@
 <% end %>
 <% title "#{@person}'s Preferences" %>
 
+<% if @has_preferences %>
+  <div class="row">
+    <% if @loves.count > 0 %>
+      <div class="col l3 m4 s6">
+        <h3><%= pluralize @loves.count, 'Love' %></h3>
+        <ul>
+          <% @loves.each do |candy| %>
+            <li><%= link_to candy, candy_path(candy) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if @likes.count > 0 %>
+      <div class="col l3 m4 s6">
+        <h3><%= pluralize @likes.count, 'Like' %></h3>
+        <ul>
+          <% @likes.each do |candy| %>
+            <li><%= link_to candy, candy_path(candy) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if @dislikes.count > 0 %>
+      <div class="col l3 m4 s6">
+        <h3><%= pluralize @dislikes.count, 'Dislike' %></h3>
+        <ul>
+          <% @dislikes.each do |candy| %>
+            <li><%= link_to candy, candy_path(candy) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if @hates.count > 0 %>
+      <div class="col l3 m4 s6">
+        <h3><%= pluralize @hates.count, 'Hate' %></h3>
+        <ul>
+          <% @hates.each do |candy| %>
+            <li><%= link_to candy, candy_path(candy) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+
+  <hr>
+<% end %>
+
 <p class="alert deep-orange lighten-3" id="preference-error" style="display: none"></p>
 
 <ul class="preferences-list">

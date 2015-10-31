@@ -8,6 +8,11 @@ class Person < ActiveRecord::Base
   has_many :likes
   has_many :dislikes
 
+  has_many :liked_candies, through: :likes, source: :candy
+  has_many :loved_candies, through: :loves, source: :candy
+  has_many :disliked_candies, through: :dislikes, source: :candy
+  has_many :hated_candies, through: :hates, source: :candy
+
   has_many :favorable_preferences, ->{ where(type: %w(Love Like)) },
            class_name: 'Preference'
 

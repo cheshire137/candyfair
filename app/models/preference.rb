@@ -21,6 +21,8 @@ class Preference < ActiveRecord::Base
 
   scope :extremes, ->{ where(type: %w(Love Hate)) }
 
+  scope :order_by_candy, ->{ joins(:candy).order('candies.name') }
+
   private
 
   def user_matches
