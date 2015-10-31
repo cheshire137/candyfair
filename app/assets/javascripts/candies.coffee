@@ -45,3 +45,35 @@ $('form.delete-candy').submit (e) ->
   message = 'Are you sure you want to delete this candy?'
   unless confirm(message)
     e.preventDefault()
+
+load_wikipedia_data = ->
+  container = $('.wikipedia')
+  url = container.data('url')
+  $.getJSON url, (response) ->
+    container.empty()
+    if response.text.length > 0
+      blockquote = document.createElement('blockquote')
+      blockquote.className = 'wikipedia-description'
+      blockquote.setAttribute 'cite', response.wikipediaUrl
+      blockquote.appendChild document.createTextNode(response.text)
+      link = document.createElement('a')
+      link.className = 'wikipedia-link'
+      link.href = response.wikipediaUrl
+      link_text = 'Wikipedia page "' + response.title + '"'
+      link.appendChild document.createTextNode(link_text)
+      if response.imageUrls.length > 0
+        imageLink = document.createElement('a')
+        imageLink.className = 'wikipedia-image-link'
+        imageLink.href = response.wikipediaUrl
+        image = document.createElement('img')
+        image.src = response.logoUrl || response.imageUrls[0]
+        image.setAttribute 'alt', 'Image of ' + response.title
+        image.className = 'wikipedia-image'
+        imageLink.appendChild image
+        $('.wikipedia-image-wrapper')[0].appendChild imageLink
+      container[0].appendChild blockquote
+      container[0].appendChild link
+
+$ ->
+  if $('.wikipedia').length > 0
+    load_wikipedia_data()

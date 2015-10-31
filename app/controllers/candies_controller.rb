@@ -1,21 +1,41 @@
 class CandiesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_candy, only: [:show, :update, :destroy]
+  before_action :set_candies, only: [:index, :show]
+  before_action :set_candy, only: [:show, :update, :destroy, :wikipedia]
 
   def index
-    @candies = current_user.candies.order(:name)
   end
 
   def show
     respond_to do |format|
       format.json
       format.html do
+        if (num_candies=@candies.count) > 0
+          candy_index = @candies.index(@candy)
+          if candy_index + 1 < num_candies - 1
+            @next_candy = @candies[candy_index + 1]
+          end
+          if candy_index > 0
+            @previous_candy = @candies[candy_index - 1]
+          end
+        end
         @has_preferences = @candy.preferences.for_user(current_user).count > 0
         @lovers = @candy.lovers.order(:name).for_user(current_user)
         @haters = @candy.haters.order(:name).for_user(current_user)
         @likers = @candy.likers.order(:name).for_user(current_user)
         @dislikers = @candy.dislikers.order(:name).for_user(current_user)
       end
+    end
+  end
+
+  def wikipedia
+    @wiki_page = @candy.get_wikipedia
+    if @wiki_page && @wiki_page.image_urls
+      @image_urls = @wiki_page.image_urls.reject {|url|
+        url.downcase =~ /\.svg$/
+      }
+    else
+      @image_urls = []
     end
   end
 
@@ -64,6 +84,10 @@ class CandiesController < ApplicationController
   end
 
   private
+
+  def set_candies
+    @candies = current_user.candies.order(:name)
+  end
 
   def set_candy
     @candy = Candy.find(params[:id])

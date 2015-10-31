@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     collection do
       get :trends
     end
+    member do
+      get :wikipedia
+    end
   end
 
   resources :people, only: [:index, :create, :show, :destroy] do

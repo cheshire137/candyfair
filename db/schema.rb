@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030235946) do
+ActiveRecord::Schema.define(version: 20151031021001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "candies", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id",    null: false
+    t.string   "name",                            null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "user_id",                         null: false
     t.string   "slug"
+    t.string   "wikipedia_title"
+    t.boolean  "skip_wikipedia",  default: false, null: false
   end
 
   add_index "candies", ["user_id", "name"], name: "index_candies_on_user_id_and_name", unique: true, using: :btree

@@ -39,3 +39,50 @@ form.delete-candy {
     font-size: 0.9rem;
   }
 }
+
+.wikipedia {
+  i.material-icons {
+    -webkit-animation: spin-2-win 2s infinite linear;
+    animation: spin-2-win 2s infinite linear;
+  }
+
+  .wikipedia-link {
+    &:before {
+      content: "\2014\a0";
+    }
+  }
+}
+
+.wikipedia-image-wrapper {
+  img.wikipedia-image {
+    max-width: 100%;
+    border: none;
+  }
+
+  .wikipedia-image-link {
+    display: block;
+    text-decoration: none;
+  }
+}
+
+@-webkit-keyframes spin-2-win {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes spin-2-win {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}

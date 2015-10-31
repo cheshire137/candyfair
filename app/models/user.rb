@@ -16,8 +16,8 @@ class User < ActiveRecord::Base
   after_create :add_american_candies
 
   def add_american_candies
-    Candy::AMERICAN_SET.each do |name|
-      Candy.create(name: name, user_id: id)
+    Candy::AMERICAN_SET.each do |name, options|
+      Candy.create(name: name, user_id: id, wikipedia_title: options[:title])
     end
   end
 

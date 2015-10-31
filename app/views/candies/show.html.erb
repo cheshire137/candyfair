@@ -6,52 +6,87 @@
 <% end %>
 <% title @candy.name %>
 
-<% unless @has_preferences %>
-  <p>No one has rated this candy yet.</p>
-<% end %>
+<div class="row">
+  <div class="col l8 m6 s12">
+    <% unless @candy.skip_wikipedia? %>
+      <div class="wikipedia" data-url="<%= wikipedia_candy_url(@candy) %>">
+        <i class="material-icons">autorenew</i>
+      </div>
+    <% end %>
+
+    <% unless @has_preferences %>
+      <p>No one has rated this candy yet.</p>
+    <% end %>
+
+    <div class="row">
+      <% if @lovers.count > 0 %>
+        <div class="col l3 m6 s6">
+          <h3>Love</h3>
+          <ul>
+            <% @lovers.each do |person| %>
+              <li><%= person %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <% if @likers.count > 0 %>
+        <div class="col l3 m6 s6">
+          <h3>Like</h3>
+          <ul>
+            <% @likers.each do |person| %>
+              <li><%= person %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <% if @dislikers.count > 0 %>
+        <div class="col l3 m6 s6">
+          <h3>Dislike</h3>
+          <ul>
+            <% @dislikers.each do |person| %>
+              <li><%= person %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <% if @haters.count > 0 %>
+        <div class="col l3 m6 s6">
+          <h3>Hate</h3>
+          <ul>
+            <% @haters.each do |person| %>
+              <li><%= person %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col l4 m6 s12">
+    <% unless @candy.skip_wikipedia? %>
+      <div class="wikipedia-image-wrapper"></div>
+    <% end %>
+  </div>
+</div>
 
 <div class="row">
-  <% if @lovers.count > 0 %>
-    <div class="col l3 m4 s6">
-      <h3>Love</h3>
-      <ul>
-        <% @lovers.each do |person| %>
-          <li><%= person %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if @likers.count > 0 %>
-    <div class="col l3 m4 s6">
-      <h3>Like</h3>
-      <ul>
-        <% @likers.each do |person| %>
-          <li><%= person %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if @dislikers.count > 0 %>
-    <div class="col l3 m4 s6">
-      <h3>Dislike</h3>
-      <ul>
-        <% @dislikers.each do |person| %>
-          <li><%= person %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if @haters.count > 0 %>
-    <div class="col l3 m4 s6">
-      <h3>Hate</h3>
-      <ul>
-        <% @haters.each do |person| %>
-          <li><%= person %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="col s6">
+    <% if @previous_candy %>
+      <%= link_to candy_path(@previous_candy) do %>
+        &laquo; <%= @previous_candy %>
+      <% end %>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </div>
+  <div class="col s6 text-right">
+    <% if @next_candy %>
+      <%= link_to candy_path(@next_candy) do %>
+        <%= @next_candy %> &raquo;
+      <% end %>
+    <% end %>
+  </div>
 </div>
+
 <hr>
 
 <%= form_tag candy_path(@candy), method: 'delete', class: 'delete-candy' do -%>

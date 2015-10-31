@@ -1,3 +1,5 @@
+require 'wikipedia'
+
 class Candy < ActiveRecord::Base
   extend FriendlyId
   extend HasNameAndUser
@@ -83,24 +85,109 @@ class Candy < ActiveRecord::Base
     ((total_haters / total_people.to_f) * 100).round
   end
 
-  AMERICAN_SET = ['100 Grand', '3 Musketeers', '5th Avenue', 'AirHeads',
-                  'Almond Joy', 'Bit-O-Honey', 'Bottle Caps', 'Butterfinger',
-                  'Cadbury Cream Egg', 'Candy Cane', 'Candy Corn', 'Caramels',
-                  'Charleston Chew', 'Circus Peanuts', 'Conversation Hearts',
-                  'Cow Tales', 'Ding Dongs', 'Dots', 'Dum Dums', 'Fudge Rounds',
-                  'Fun Dip', 'Gummi Worms', 'Heath', "Hershey's",
-                  "Hershey's Kisses", 'Jelly Bellies', 'Jolly Rancher',
-                  'Junior Mints', 'Kit Kat', 'LaffyTaffy', 'Lemonheads',
-                  'Licorice', 'LifeSavers', 'Mars', 'Mary Janes',
-                  'Mike and Ikes', 'Milk Duds', 'MilkyWay', 'M&Ms', 'Mounds',
-                  'Necco Wafers', 'Nerds', 'Nestlé Crunch',
-                  'Oatmeal Cream Pies', 'PayDay', 'Peach Rings', 'Peeps', 'Pez',
-                  'Pixy Stix', 'RedVines', "Reese's Cups", "Reese's Pieces",
-                  'Riesen', 'Rolos', 'Skittles', 'Smarties', 'Snickers',
-                  'Sour Patch Kids', 'Starburst', 'Star Crunch', 'Swedish Fish',
-                  'SweeTarts', 'Swiss Cake Rolls', 'Toblerone', 'Tootsie Roll',
-                  'Tootsie Roll Pops', 'Trolli Strawberry Puffs', 'Twinkies',
-                  'Twix', 'Twizzlers', 'WarHeads', 'Whatchamacallit',
-                  'Whoppers', 'York Peppermint Patties', 'Zebra Cakes',
-                  'Zero'].freeze
+  def get_wikipedia
+    query = wikipedia_title
+    return unless query.present?
+    return if skip_wikipedia?
+    Wikipedia.find(query)
+  end
+
+  def wikipedia_title
+    wikipedia_title? ? attributes['wikipedia_title'] : name
+  end
+
+  def self.update_wikipedia_data
+    AMERICAN_SET.select {|name, options|
+      options[:title].present? && !options.key?(:skip)
+    }.each do |name, options|
+      title = options[:title]
+      Candy.where(name: name).
+            where('wikipedia_title IS NULL OR wikipedia_title != ?', title).
+            update_all(wikipedia_title: title)
+    end
+    AMERICAN_SET.select {|name, options|
+      options.key?(:skip)
+    }.each do |name, options|
+      Candy.where(name: name).update_all(skip_wikipedia: true)
+    end
+  end
+
+  AMERICAN_SET = {
+    '100 Grand' => {title: nil},
+    '3 Musketeers' => {title: '3 Musketeers (chocolate bar)'},
+    '5th Avenue' => {title: nil},
+    'AirHeads' => {title: nil},
+    'Almond Joy' => {title: nil},
+    'Bit-O-Honey' => {title: nil},
+    'Bottle Caps' => {title: nil},
+    'Butterfinger' => {title: nil},
+    'Cadbury Cream Egg' => {title: nil},
+    'Candy Cane' => {title: nil},
+    'Candy Corn' => {title: nil},
+    'Caramels' => {title: nil},
+    'Charleston Chew' => {title: nil},
+    'Circus Peanuts' => {title: nil},
+    'Conversation Hearts' => {title: nil},
+    'Cow Tales' => {title: nil, skip: true},
+    'Ding Dongs' => {title: nil},
+    'Dots' => {title: 'Dots (candy)'},
+    'Dum Dums' => {title: nil},
+    'Fudge Rounds' => {title: nil},
+    'Fun Dip' => {title: nil},
+    'Gummi Worms' => {title: nil},
+    'Heath' => {title: 'Heath bar'},
+    "Hershey's" => {title: nil, skip: true},
+    "Hershey's Kisses" => {title: nil},
+    'Jelly Bellies' => {title: 'Jelly Belly'},
+    'Jolly Rancher' => {title: nil},
+    'Junior Mints' => {title: nil},
+    'Kit Kat' => {title: nil},
+    'Laffy Taffy' => {title: nil},
+    'Lemonheads' => {title: 'Lemonhead (candy)'},
+    'Licorice' => {title: nil},
+    'Life Savers' => {title: nil},
+    'Mars' => {title: 'Mars (chocolate bar)'},
+    'Mary Janes' => {title: nil},
+    'Mike and Ikes' => {title: nil},
+    'Milk Duds' => {title: nil},
+    'Milky Way' => {title: 'Milky Way (chocolate bar)'},
+    'M&Ms' => {title: nil},
+    'Mounds' => {title: 'Mounds (candy)'},
+    'Necco Wafers' => {title: nil},
+    'Nerds' => {title: 'Nerds (candy)'},
+    'Nestlé Crunch' => {title: nil},
+    'Oatmeal Cream Pies' => {title: nil, skip: true},
+    'PayDay' => {title: 'PayDay (confection)'},
+    'Peach Rings' => {title: nil},
+    'Peeps' => {title: nil},
+    'Pez' => {title: nil},
+    'Pixy Stix' => {title: nil},
+    'RedVines' => {title: nil},
+    "Reese's Cups" => {title: "Reese's Peanut Butter Cups"},
+    "Reese's Pieces" => {title: nil},
+    'Riesen' => {title: nil},
+    'Rolos' => {title: nil},
+    'Skittles' => {title: 'Skittles (confectionery)'},
+    'Smarties' => {title: 'Smarties (wafer candy)'},
+    'Snickers' => {title: nil},
+    'Sour Patch Kids' => {title: nil},
+    'Starburst' => {title: 'Starburst (confectionery)'},
+    'Star Crunch' => {title: nil, skip: true},
+    'Swedish Fish' => {title: nil},
+    'SweeTarts' => {title: nil},
+    'Swiss Cake Rolls' => {title: nil, skip: true},
+    'Toblerone' => {title: nil},
+    'Tootsie Roll' => {title: nil},
+    'Tootsie Roll Pops' => {title: nil},
+    'Trolli Strawberry Puffs' => {title: nil},
+    'Twinkies' => {title: nil},
+    'Twix' => {title: nil},
+    'Twizzlers' => {title: nil},
+    'WarHeads' => {title: nil},
+    'Whatchamacallit' => {title: 'Whatchamacallit (candy)'},
+    'Whoppers' => {title: nil},
+    'York Peppermint Patties' => {title: nil},
+    'Zebra Cakes' => {title: nil},
+    'Zero' => {title: nil},
+  }.freeze
 end

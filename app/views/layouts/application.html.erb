@@ -60,6 +60,9 @@
       <% if alert.present? %>
         <p class="alert deep-orange lighten-3"><%= alert %></p>
       <% end %>
+      <% if content_for? :title_string %>
+        <h1 class="page-title"><%= yield :title_string %></h1>
+      <% end %>
       <%= yield %>
     </div>
   </main>

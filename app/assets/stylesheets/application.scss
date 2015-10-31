@@ -17,6 +17,14 @@ main {
 .main-content {
   padding-top: 15px;
 
+  h1.page-title {
+    font-size: 1.64rem;
+    line-height: 110%;
+    margin: 0 0 0.656rem 0;
+    border-bottom: 1px solid #e65100;
+    padding-bottom: 0.656rem;
+  }
+
   a, a:link, a:visited, a:active {
     color: #ff6f00;
     -webkit-transition: all 0.25s ease-in-out;
@@ -111,4 +119,12 @@ hr {
     font-size: 1rem;
     font-weight: 700;
   }
+}
+
+blockquote {
+  border-left-color: #ef6c00;
+}
+
+.text-right {
+  text-align: right;
 }
