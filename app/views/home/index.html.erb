@@ -37,7 +37,7 @@
     <li data-candy-ids="<%= candy_ids_str %>" data-person-ids="<%= data[:person_id] %>">
       Give all the
       <% data[:candies].each_with_index do |candy, i| %>
-        <strong><%= link_to candy, candy_path(candy) %></strong><% if i == data[:candies].length - 2 %><% if data[:candies].length > 2 %>,<% end %> and<% elsif i < data[:candies].length - 1 %>, <% end %><% if i == data[:candies].length - 1 %>.<% end %>
+        <strong><%= link_to candy, candy_path(candy) %></strong><% if i == data[:candies].length - 2 %><% if data[:candies].length > 2 %>,<% end %> and<% elsif i < data[:candies].length - 1 %>, <% end %>
       <% end %>
       to <strong><%= person %></strong>.
     </li>
