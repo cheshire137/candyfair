@@ -52,7 +52,7 @@
       <ol>
         <% @pickiest_eaters.each do |person| %>
           <li>
-            <%= person %>&nbsp;&nbsp;
+            <%= link_to person, person_preferences_path(person) %>&nbsp;&nbsp;
             <em class="grey-text">
               <%= person.favorable_preferences.count %> favorable
               versus
