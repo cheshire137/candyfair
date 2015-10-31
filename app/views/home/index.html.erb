@@ -52,7 +52,7 @@
       <% else %>
         Divvy up
       <% end %>
-      the <strong><%= link_to candy, candy_path(candy) %></strong>
+      the <strong><%= link_to candy, candy_path(data[:slug]) %></strong>
       <% if data[:loves].empty? || data[:likes].empty? %>
         evenly
       <% end %>

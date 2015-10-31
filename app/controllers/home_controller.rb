@@ -22,6 +22,7 @@ class HomeController < ApplicationController
       key = candy.name
       favored_by_many[key] ||= {}
       favored_by_many[key][:id] = candy.id
+      favored_by_many[key][:slug] = candy.slug
       favored_by_many[key][:loves] = candy.loves.map(&:person)
       favored_by_many[key][:likes] = candy.likes.map(&:person)
     end
