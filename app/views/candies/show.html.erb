@@ -1,0 +1,59 @@
+<% content_for :title do %>
+  <li>
+    <%= link_to 'Candies', candies_path %> /
+    <%= link_to @candy.name, candy_path(@candy) %>
+  </li>
+<% end %>
+<% title @candy.name %>
+
+<% unless @has_preferences %>
+  <p>No one has rated this candy yet.</p>
+<% end %>
+
+<div class="row">
+  <% if @lovers.count > 0 %>
+    <div class="col l3 m4 s6">
+      <h3>Love</h3>
+      <ul>
+        <% @lovers.each do |person| %>
+          <li><%= person %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if @likers.count > 0 %>
+    <div class="col l3 m4 s6">
+      <h3>Like</h3>
+      <ul>
+        <% @likers.each do |person| %>
+          <li><%= person %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if @dislikers.count > 0 %>
+    <div class="col l3 m4 s6">
+      <h3>Dislike</h3>
+      <ul>
+        <% @dislikers.each do |person| %>
+          <li><%= person %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if @haters.count > 0 %>
+    <div class="col l3 m4 s6">
+      <h3>Hate</h3>
+      <ul>
+        <% @haters.each do |person| %>
+          <li><%= person %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+<hr>
+
+<%= form_tag candy_path(@candy), method: 'delete', class: 'delete-candy' do -%>
+  <%= submit_tag 'Delete This Candy', class: 'btn red accent-2 white-text' %>
+<% end %>

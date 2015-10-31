@@ -1,6 +1,7 @@
 <% content_for :title do %>
   <li><%= link_to 'People', people_path %></li>
 <% end %>
+<% title 'People' %>
 
 <p data-has-preferences="<%= @has_preferences %>" id="new-people-message"<%= raw ' style="display: none"' if @people.count < 1 || @has_preferences %>>
   Now, click your name below and rate some candy!

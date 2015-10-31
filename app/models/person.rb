@@ -1,12 +1,6 @@
 class Person < ActiveRecord::Base
   extend FriendlyId
-
-  belongs_to :user
-
-  validates :name, :user, presence: true
-  validates :name, uniqueness: {scope: [:user_id]}
-
-  friendly_id :name, use: [:slugged, :finders]
+  extend HasNameAndUser
 
   has_many :preferences, dependent: :destroy
   has_many :loves
@@ -20,8 +14,6 @@ class Person < ActiveRecord::Base
   has_many :unfavorable_preferences, ->{ where(type: %w(Hate Dislike)) },
            class_name: 'Preference'
 
-  scope :for_user, ->(user) { where(user_id: user) }
-
   scope :with_preference_counts, ->{
     joins(:preferences).
         select('people.*, ' +
@@ -31,8 +23,6 @@ class Person < ActiveRecord::Base
                "ELSE 0 END) AS unfavorable_count").
         group(:id)
   }
-
-  def to_s ; name ; end
 
   def self.order_by_pickiness user, limit
     for_user(user).with_preference_counts.select {|person|

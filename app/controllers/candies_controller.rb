@@ -1,14 +1,22 @@
 class CandiesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_candy, only: [:show, :update]
+  before_action :set_candy, only: [:show, :update, :destroy]
 
   def index
     @candies = current_user.candies.order(:name)
-    set_candies_list
   end
 
   def show
-    set_candies_list
+    respond_to do |format|
+      format.json
+      format.html do
+        @has_preferences = @candy.preferences.for_user(current_user).count > 0
+        @lovers = @candy.lovers.order(:name).for_user(current_user)
+        @haters = @candy.haters.order(:name).for_user(current_user)
+        @likers = @candy.likers.order(:name).for_user(current_user)
+        @dislikers = @candy.dislikers.order(:name).for_user(current_user)
+      end
+    end
   end
 
   def trends
@@ -28,7 +36,6 @@ class CandiesController < ApplicationController
   def create
     @candy = current_user.candies.new(name: params[:name])
     if @candy.save
-      set_candies_list
       render action: 'show', status: :created
     else
       render json: @candy.errors, status: :unprocessable_entity
@@ -36,12 +43,23 @@ class CandiesController < ApplicationController
   end
 
   def destroy
-    @candy = current_user.candies.find_by_name(params[:name])
     if @candy.destroy
-      set_candies_list
-      render action: 'show'
+      respond_to do |format|
+        format.json { render action: 'show' }
+        format.html {
+          redirect_to candies_path, notice: "Who needs #{@candy.name} anyway?"
+        }
+      end
     else
-      render json: @candy.errors, status: :unprocessable_entity
+      respond_to do |format|
+        format.json {
+          render json: @candy.errors, status: :unprocessable_entity
+        }
+        format.html {
+          redirect_to candy_path(@candy),
+                      alert: "Could not delete #{@candy.name}."
+        }
+      end
     end
   end
 
@@ -49,14 +67,5 @@ class CandiesController < ApplicationController
 
   def set_candy
     @candy = Candy.find(params[:id])
-  end
-
-  def set_candies_list
-    @candies ||= current_user.candies.order(:name)
-    if @candies.count > 0
-      @candies_list = @candies.select(:name).pluck(:name).to_sentence + '.'
-    else
-      @candies_list = ''
-    end
   end
 end

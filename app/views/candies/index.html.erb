@@ -1,10 +1,20 @@
 <% content_for :title do %>
-  <li><%= link_to 'Candies', candies_path %></li>
+  <li><%= link_to "Candies (#{number_with_delimiter @candies.count, delimiter: ','})", candies_path %></li>
 <% end %>
 
-<p id="candy-error" class="alert deep-orange lighten-3" style="display: none"></p>
-
-<p class="candies-list"><%= @candies_list %></p>
+<div class="row candies-lists-container">
+  <% @candies.each_slice(@candies.count / 3.0) do |candies_slice| %>
+    <div class="col l3 m4 s6">
+      <ul class="candies-list">
+        <% candies_slice.each do |candy| %>
+          <li>
+            <%= link_to candy, candy_path(candy) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
 
 <div class="row">
   <form class="add-candy col s12">

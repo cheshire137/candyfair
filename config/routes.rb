@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :candies, only: [:index, :create, :show] do
+  resources :candies, only: [:index, :create, :show, :destroy] do
     collection do
-      delete :destroy
       get :trends
     end
   end

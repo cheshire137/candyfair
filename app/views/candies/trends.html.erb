@@ -1,6 +1,7 @@
 <% content_for :title do %>
   <li><%= link_to 'Trends', trends_candies_path %></li>
 <% end %>
+<% title 'Trends' %>
 
 <% if @hate_percentage && @hated_candy %>
   <p>

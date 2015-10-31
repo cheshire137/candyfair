@@ -9,3 +9,24 @@ a.remove-candy {
     margin-top: 2.46rem;
   }
 }
+
+.candies-list {
+  li {
+    padding-left: 0;
+    white-space: nowrap;
+
+    a {
+      padding: 0.1em 0.2em;
+      border-radius: 2px;
+      -webkit-transition: background-color 0.25s ease-in-out;
+      -moz-transition: background-color 0.25s ease-in-out;
+      -ms-transition: background-color 0.25s ease-in-out;
+      -o-transition: background-color 0.25s ease-in-out;
+      transition: background-color 0.25s ease-in-out;
+
+      &.highlight {
+        background-color: #ffecb3;
+      }
+    }
+  }
+}

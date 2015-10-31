@@ -1,35 +1,28 @@
-linkify_candies = ->
-  container = $('.candies-list')
-  candy_names = container.text().split(',')
-  if candy_names.length == 1
-    candy_names = candy_names[0].split(' and ')
-  candy_names = ($.trim(name) for name in candy_names)
-  last_name = candy_names[candy_names.length - 1]
-  last_name = last_name.replace(/^and /, '').replace(/\.$/, '')
-  candy_names[candy_names.length - 1] = last_name
-  links = []
-  for name in candy_names when name != ''
-    link = document.createElement('a')
-    link.href = '#'
-    link.className = 'remove-candy'
-    link.appendChild document.createTextNode(name)
-    links.push link
-  container.empty()
-  i = 0
-  container_el = container[0]
-  for link in links
-    container_el.appendChild link
-    if i == links.length - 2 and links.length > 1
-      container_el.appendChild document.createTextNode(' and ')
-    else if i < links.length - 1
-      container_el.appendChild document.createTextNode(', ')
-    i++
-  if i > 0
-    container_el.appendChild document.createTextNode('.')
-
 update_candies_list = (response) ->
-  $('.candies-list').text(response.candies_list)
-  linkify_candies()
+  last_column = $('.candies-lists-container div.col:last-child')
+  penultimate_column = last_column.prev('div.col')
+  last_column_size = last_column.find('ul.candies-list li').length
+  penultimate_column_size = penultimate_column.find('ul.candies-list li').length
+  same_length = last_column_size == penultimate_column_size
+  li = document.createElement('li')
+  link = document.createElement('a')
+  link.href = response.url
+  link.className = 'highlight'
+  link.appendChild document.createTextNode(response.name)
+  li.appendChild link
+  if same_length
+    list = document.createElement('ul')
+    list.className = 'candies-list'
+    new_column = document.createElement('div')
+    new_column.className = last_column[0].className
+    new_column.appendChild list
+    $('.candies-lists-container')[0].appendChild new_column
+  else
+    list = last_column.find('ul.candies-list')[0]
+  removeLinkHighlight = ->
+    link.className = ''
+  list.appendChild li
+  setTimeout removeLinkHighlight, 2000
 
 $('form.add-candy').on 'submit', (e) ->
   e.preventDefault()
@@ -48,26 +41,7 @@ $('form.add-candy').on 'submit', (e) ->
     $('#candy-error').text('Could not add candy').show()
   $.ajax(options).done(on_success).fail(on_error)
 
-$('body').on 'click', 'a.remove-candy', (e) ->
-  e.preventDefault()
-  link = $(e.target)
-  name = link.text()
-  unless confirm("Are you sure you want to delete #{name}?")
-    link.blur()
-    return
-  options =
-    method: 'DELETE'
-    url: '/candies.json'
-    data:
-      name: name
-  on_success = (response) ->
-    update_candies_list response
-    $('#candy-error').text('').hide()
-  on_error = (xhr, status, error) ->
-    console.error 'failed to delete candy ' + name, error
-    $('#candy-error').text('Could not delete candy').show()
-  $.ajax(options).done(on_success).fail(on_error)
-
-$ ->
-  if $('.candies-list').length > 0
-    linkify_candies()
+$('form.delete-candy').submit (e) ->
+  message = 'Are you sure you want to delete this candy?'
+  unless confirm(message)
+    e.preventDefault()
