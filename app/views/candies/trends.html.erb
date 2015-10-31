@@ -36,11 +36,7 @@
       <ol>
         <% @divisive_candies.each do |candy| %>
           <li>
-            <%= link_to candy, candy_path(candy) %>&nbsp;&nbsp;
-            <em class="grey-text">
-              <%= pluralize candy.love_count, 'love' %>,
-              <%= pluralize candy.hate_count, 'hate' %>
-            </em>
+            <%= link_to candy, candy_path(candy) %>
           </li>
         <% end %>
       </ol>
