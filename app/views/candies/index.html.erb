@@ -1,6 +1,7 @@
 <% content_for :title do %>
   <li><%= link_to "Candies (#{number_with_delimiter @candies.count, delimiter: ','})", candies_path %></li>
 <% end %>
+<% title 'Candies' %>
 
 <div class="row candies-lists-container">
   <% @candies.each_slice(@candies.count / 3.0) do |candies_slice| %>
