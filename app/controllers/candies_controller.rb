@@ -47,8 +47,7 @@ class CandiesController < ApplicationController
       @hate_percentage = @hated_candy.percentage_hate(current_user)
     end
     @boring_candies = Candy.boring.for_user(current_user).limit(5)
-    @unrated_candies = Candy.unrated.for_user(current_user).order(:name).
-                             pluck(:name)
+    @unrated_candies = Candy.unrated.for_user(current_user).order(:name)
     @divisive_candies = Candy.most_divisive(current_user, 5)
     @pickiest_eaters = Person.order_by_pickiness(current_user, 5)
   end

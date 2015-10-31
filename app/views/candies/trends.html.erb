@@ -6,7 +6,8 @@
 <% if @hate_percentage && @hated_candy %>
   <p>
     <strong><%= @hate_percentage %>%</strong> of people think
-    <strong><%= @hated_candy %></strong> is a bullshit candy.
+    <strong><%= link_to @hated_candy, candy_path(@hated_candy) %></strong>
+    is a bullshit candy.
   </p>
 <% end %>
 
@@ -16,7 +17,7 @@
       <h3>Most Popular Candies</h3>
       <ol>
         <% @popular_candies.each do |candy| %>
-          <li><%= candy %></li>
+          <li><%= link_to candy, candy_path(candy) %></li>
         <% end %>
       </ol>
     <% end %>
@@ -25,7 +26,7 @@
       <h3>Most Disliked Candies</h3>
       <ol>
         <% @disliked_candies.each do |candy| %>
-          <li><%= candy %></li>
+          <li><%= link_to candy, candy_path(candy) %></li>
         <% end %>
       </ol>
     <% end %>
@@ -35,7 +36,7 @@
       <ol>
         <% @divisive_candies.each do |candy| %>
           <li>
-            <%= candy %>&nbsp;&nbsp;
+            <%= link_to candy, candy_path(candy) %>&nbsp;&nbsp;
             <em class="grey-text">
               <%= pluralize candy.love_count, 'love' %>,
               <%= pluralize candy.hate_count, 'hate' %>
@@ -66,14 +67,16 @@
       <h3>Most Boring Candies</h3>
       <ol>
         <% @boring_candies.each do |candy| %>
-          <li><%= candy %></li>
+          <li><%= link_to candy, candy_path(candy) %></li>
         <% end %>
       </ol>
     <% end %>
 
     <% if @unrated_candies.to_a.size > 0 %>
       <p>
-        <strong><%= @unrated_candies.to_sentence %></strong>
+        <% @unrated_candies.each_with_index do |candy, i| %>
+          <strong><%= link_to candy, candy_path(candy) %></strong><% if i == @unrated_candies.length - 2 %><% if @unrated_candies.length > 2 %>,<% end %> and<% elsif i < @unrated_candies.length - 1 %>, <% end %>
+        <% end %>
         <% if @unrated_candies.to_a.size == 1 %>
           has
         <% else %>
