@@ -115,7 +115,7 @@ class Candy < ActiveRecord::Base
   AMERICAN_SET = {
     '100 Grand' => {title: nil},
     '3 Musketeers' => {title: '3 Musketeers (chocolate bar)'},
-    '5th Avenue' => {title: nil},
+    '5th Avenue' => {title: '5th Avenue (candy)'},
     'AirHeads' => {title: nil},
     'Almond Joy' => {title: nil},
     'Bit-O-Honey' => {title: nil},
