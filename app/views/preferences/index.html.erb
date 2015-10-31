@@ -11,7 +11,7 @@
 <ul class="preferences-list">
   <% @preferences.each do |candy_name, data| %>
     <li>
-      <h3><%= candy_name %></h3>
+      <h3><%= link_to candy_name, candy_path(data[:candy]) %></h3>
       <ol class="preference">
         <li class="hate<%= ' active' if data.key?(:hate) %>">
           <a href="#" class="tooltipped set-preference" data-candy-id="<%= data[:candy].id %>" data-person-id="<%= @person.id %>" data-preference-id="<%= data.key?(:preference) ? data[:preference].id : '' %>" data-preference-type="Hate" data-position="top" data-tooltip="Hate">

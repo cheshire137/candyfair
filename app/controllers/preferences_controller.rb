@@ -6,9 +6,10 @@ class PreferencesController < ApplicationController
     @candies = current_user.candies.order(:name)
     @preferences = Hash[@candies.map {|c| [c.name, {candy: c}] }]
     @person.preferences.for_candy(@candies).each do |preference|
-      @preferences[preference.candy.name][:preference] = preference
+      key = preference.candy.name
+      @preferences[key][:preference] = preference
       type = preference.type.downcase.to_sym
-      @preferences[preference.candy.name][type] = true
+      @preferences[key][type] = true
     end
   end
 
