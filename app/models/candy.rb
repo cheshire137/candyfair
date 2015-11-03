@@ -96,6 +96,35 @@ class Candy < ActiveRecord::Base
     wikipedia_title? ? attributes['wikipedia_title'] : name
   end
 
+  def self.update_user_candies
+    american_candy_names = AMERICAN_SET.keys
+    new_candy_count = 0
+    users = User.all.select {|user|
+      total = user.candies.count
+      non_american_count = user.candies.
+          where.not(name: american_candy_names).count
+      non_american_pct = (non_american_count.to_f / total) * 100
+      # Non-American candy percentage is low, meaning they mainly have candies
+      # from the American set, or they don't have any candies yet at all.
+      non_american_pct < 50 || total == 0
+    }
+    users.each do |user|
+      AMERICAN_SET.select {|name, options|
+        user.candies.where(name: name).count < 1
+      }.each do |name, options|
+        candy = Candy.create(user: user, name: name,
+                             wikipedia_title: options[:title],
+                             skip_wikipedia: options.key?(:skip))
+        if candy.persisted?
+          new_candy_count += 1
+        end
+      end
+    end
+    puts "Updated potentially #{users.size} #{'user'.pluralize users.size}: " +
+         "#{users.map(&:username).join(', ')}"
+    puts "Created #{new_candy_count} #{'candy'.pluralize new_candy_count}"
+  end
+
   def self.update_wikipedia_data
     AMERICAN_SET.select {|name, options|
       options[:title].present? && !options.key?(:skip)
@@ -118,6 +147,7 @@ class Candy < ActiveRecord::Base
     '5th Avenue' => {title: '5th Avenue (candy)'},
     'AirHeads' => {title: nil},
     'Almond Joy' => {title: nil},
+    'Baby Ruth' => {title: nil},
     'Bit-O-Honey' => {title: nil},
     'Bottle Caps' => {title: nil},
     'Butterfinger' => {title: nil},
@@ -171,6 +201,7 @@ class Candy < ActiveRecord::Base
     'Smarties' => {title: 'Smarties (wafer candy)'},
     'Snickers' => {title: nil},
     'Sour Patch Kids' => {title: nil},
+    'Spree' => {title: 'Spree (candy)'},
     'Starburst' => {title: 'Starburst (confectionery)'},
     'Star Crunch' => {title: nil, skip: true},
     'Swedish Fish' => {title: nil},
@@ -187,6 +218,7 @@ class Candy < ActiveRecord::Base
     'Whatchamacallit' => {title: 'Whatchamacallit (candy)'},
     'Whoppers' => {title: nil},
     'York Peppermint Patties' => {title: nil},
+    'Zagnut' => {title: nil},
     'Zebra Cakes' => {title: nil, skip: true},
     'Zero' => {title: 'ZERO bar'},
   }.freeze
