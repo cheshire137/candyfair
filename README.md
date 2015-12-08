@@ -1,6 +1,6 @@
-![Candyfair](https://raw.githubusercontent.com/moneypenny/candyfair/master/app/assets/images/CANDYFAIR-75px.png)
+![Candyfair](https://raw.githubusercontent.com/cheshire137/candyfair/master/app/assets/images/CANDYFAIR-75px.png)
 
-The fairest way to distribute candy! Thanks to 
+The fairest way to distribute candy! Thanks to
 [summasmiff](https://github.com/summasmiff) for the logo!
 
 ## How to Develop
